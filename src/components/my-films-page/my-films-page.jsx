@@ -1,27 +1,11 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+import filmProp from '../../prop-types/film.prop';
 import Catalog from '../catalog/catalog';
 import PageFooter from '../page-footer/page-footer';
 import PageHeader from '../page-header/page-header';
 
-const genres = [
-  {name: `All`},
-  {name: `Comedies`},
-  {name: `Crime`},
-  {name: `Documentary`},
-  {name: `Dramas`},
-];
-const films = [
-  {id: 0},
-  {id: 1},
-  {id: 2},
-  {id: 3},
-  {id: 4},
-  {id: 5},
-  {id: 6},
-  {id: 7},
-];
-
-const MyFilmsPage = () => {
+const MyFilmsPage = ({films}) => {
   return (
     <div className="user-page">
       <PageHeader isAuth={true} className="user-page__head">
@@ -31,6 +15,10 @@ const MyFilmsPage = () => {
       <PageFooter />
     </div>
   );
+};
+
+MyFilmsPage.propTypes = {
+  films: PropTypes.arrayOf(filmProp)
 };
 
 export default MyFilmsPage;

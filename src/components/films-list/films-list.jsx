@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import PreviewFilmCard from '../preview-film-card/preview-film-card';
 import filmProp from '../../prop-types/film.prop';
 
 const FilmsList = ({films}) => {
+  const [activeItem, setActiveItem] = useState();
   return (
     <div className="catalog__movies-list">
       {films.map((film) => {
@@ -12,6 +13,7 @@ const FilmsList = ({films}) => {
             key={film.id}
             film={film}
             className="catalog__movies-card"
+            onMouseEnter={() => setActiveItem(film)}
           />
         );
       })}

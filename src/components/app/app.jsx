@@ -27,7 +27,9 @@ const App = () => {
           <HomePage genres={genres} films={films} />
         </Route>
         <Route path={LOGIN} exact component={LoginPage} />
-        <Route path={MY_LIST} exact component={MyFilmsPage} />
+        <Route path={MY_LIST} exact>
+          <MyFilmsPage films={films} />
+        </Route>
         <Route path={`${FILMS}/:id`} exact>
           <FilmPage film={films[0]} />
         </Route>
