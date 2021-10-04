@@ -4,25 +4,25 @@ import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 
 const GenresList = ({genres}) => {
-  const [activeItemIndex, setActiveItemIndex] = useState(0);
+  const [activeItem, setActiveItem] = useState(genres[0]);
   return (
     <ul className="catalog__genres-list">
-      {genres.map((genre, i) => (
+      {genres.map((genre) => (
         <li
-          key={genre.name}
+          key={genre}
           className={classNames(`catalog__genres-item`, {
-            [`catalog__genres-item--active`]: i === activeItemIndex
+            [`catalog__genres-item--active`]: genre === activeItem
           })}
-          onClick={() => setActiveItemIndex(i)}
+          onClick={() => setActiveItem(genre)}
         >
-          <Link to="/" className="catalog__genres-link">{genre.name}</Link>
+          <Link to="/" className="catalog__genres-link">{genre}</Link>
         </li>))}
     </ul>
   );
 };
 
 GenresList.propTypes = {
-  genres: PropTypes.arrayOf(PropTypes.object).isRequired
+  genres: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 export default GenresList;

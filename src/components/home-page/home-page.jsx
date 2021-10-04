@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Promo from '../promo/promo';
 import Catalog from '../catalog/catalog';
 import PageFooter from '../page-footer/page-footer';
+import filmProp from '../../prop-types/film.prop';
 
 const HomePage = ({genres, films}) => {
   const promoFilm = films[0];
@@ -19,7 +20,7 @@ const HomePage = ({genres, films}) => {
 
 HomePage.propTypes = {
   genres: PropTypes.arrayOf(PropTypes.object),
-  films: PropTypes.arrayOf(PropTypes.object).isRequired
+  films: PropTypes.arrayOf(filmProp).isRequired
 };
 
 export default HomePage;

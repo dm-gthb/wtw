@@ -1,6 +1,7 @@
 const film = {
   "id": 1,
   "name": `The Grand Budapest Hotel`,
+  "previewImage": `img/the-grand-budapest-hotel.jpg`,
   "posterImage": `img/the-grand-budapest-hotel-poster.jpg`,
   "description": `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.`,
   "rating": 8.9,
@@ -13,11 +14,11 @@ const film = {
 };
 
 export const genres = [
-  {name: `All`},
-  {name: `Comedies`},
-  {name: `Crime`},
-  {name: `Documentary`},
-  {name: `Dramas`},
+  `All`,
+  `Comedies`,
+  `Crime`,
+  `Documentary`,
+  `Dramas`,
 ];
 
 export const films = new Array(10).fill(film);

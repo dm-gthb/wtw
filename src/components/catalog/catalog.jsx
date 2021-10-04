@@ -17,7 +17,7 @@ const Catalog = ({genres, films}) => {
 };
 
 Catalog.propTypes = {
-  genres: PropTypes.arrayOf(PropTypes.object),
+  genres: PropTypes.arrayOf(PropTypes.string),
   films: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
