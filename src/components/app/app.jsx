@@ -7,6 +7,7 @@ import LoginPage from '../login-page/login-page';
 import MyFilmsPage from '../my-films-page/my-films-page';
 import ReviewPage from '../review-page/review-page';
 import PlayerPage from '../player-page/player-page';
+import NotFoundPage from '../not-found-page/not-found-page';
 import {genres, films} from '../../mocks/mocks';
 
 const App = () => {
@@ -32,6 +33,7 @@ const App = () => {
         </Route>
         <Route path={`${FILMS}/:id${REVIEW}`} component={ReviewPage} />
         <Route path={`${PLAYER}/:id/`} exact component={PlayerPage} />
+        <Route component={NotFoundPage} />
       </Switch>
     </Router>
   );
