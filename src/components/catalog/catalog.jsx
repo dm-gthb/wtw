@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MoviesList from './movies-list';
-import GenresList from './genres-list';
+import FilmsList from '../films-list/films-list';
+import GenresList from '../genres-list/genres-list';
 
-const Catalog = ({genres, movies}) => {
+const Catalog = ({genres, films}) => {
   return (
     <section className="catalog">
       <h2 className="catalog__title visually-hidden">Catalog</h2>
-      <GenresList genres={genres} />
-      <MoviesList movies={movies} />
+      {genres && genres.length && <GenresList genres={genres} />}
+      <FilmsList films={films} />
       <div className="catalog__more">
         <button className="catalog__button" type="button">Show more</button>
       </div>
@@ -17,8 +17,8 @@ const Catalog = ({genres, movies}) => {
 };
 
 Catalog.propTypes = {
-  genres: PropTypes.arrayOf(PropTypes.object).isRequired,
-  movies: PropTypes.arrayOf(PropTypes.object).isRequired
+  genres: PropTypes.arrayOf(PropTypes.object),
+  films: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default Catalog;

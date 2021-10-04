@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-const MovieCard = ({className}) => {
+const PreviewFilmCard = ({className}) => {
   return (
     <article className={classNames(`small-movie-card`, className)}>
       <div className="small-movie-card__image">
@@ -15,8 +15,8 @@ const MovieCard = ({className}) => {
   );
 };
 
-MovieCard.propTypes = {
+PreviewFilmCard.propTypes = {
   className: PropTypes.string.isRequired
 };
 
-export default MovieCard;
+export default PreviewFilmCard;
