@@ -18,3 +18,5 @@ export const FilmDetailsNavTitle = {
   DETAILS: `Details`,
   REVIEWS: `Reviews`,
 };
+
+export const MAX_RATING = 10;

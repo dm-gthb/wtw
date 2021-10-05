@@ -9,17 +9,17 @@ const PosterClassName = {
   [PosterSize.LARGE]: `movie-card__poster--big`,
 };
 
-const Poster = ({size = PosterSize.REGULAR, title, imageSrc}) => {
+const Poster = ({size = PosterSize.REGULAR, title, image}) => {
   return (
     <div className={classNames(`movie-card__poster`, PosterClassName[size])}>
-      <img src={imageSrc} alt={title} />
+      <img src={image} alt={title} />
     </div>
   );
 };
 
 Poster.propTypes = {
   title: PropTypes.string.isRequired,
-  imageSrc: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
   size: PropTypes.oneOf(Object.keys(PosterSize))
 };
 

@@ -5,6 +5,7 @@ const {shape, number, string, arrayOf} = PropTypes;
 export default shape({
   id: number.isRequired,
   name: string.isRequired,
+  backgroundImage: string.isRequired,
   previewImage: string.isRequired,
   posterImage: string.isRequired,
   description: string.isRequired,

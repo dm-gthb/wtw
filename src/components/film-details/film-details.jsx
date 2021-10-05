@@ -4,7 +4,7 @@ import Overview from '../overview/overview';
 import DetailsNav from '../details-nav/details-nav';
 import {FilmDetailsNavTitle} from '../../constants';
 import FilmMetaInfo from '../film-meta-info/film-meta-info';
-import Reviews from '../reviews/review';
+import Reviews from '../reviews/reviews';
 
 const FilmDetails = ({film}) => {
   const [activeTab, setActiveTab] = useState(FilmDetailsNavTitle.OVERVIEW);

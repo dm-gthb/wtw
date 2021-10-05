@@ -5,6 +5,7 @@ import PageHeader from '../page-header/page-header';
 import Poster from '../poster/poster';
 
 const Promo = ({film}) => {
+  const {name, posterImage, backgroundImage} = film;
   const actionButtons = (<>
     <button className="btn btn--play movie-card__button" type="button">
       <svg viewBox="0 0 19 19" width="19" height="19">
@@ -23,13 +24,13 @@ const Promo = ({film}) => {
   return (
     <section className="movie-card">
       <div className="movie-card__bg">
-        <img src="img/bg-the-grand-budapest-hotel.jpg" alt={film.name} />
+        <img src={backgroundImage} alt={name} />
       </div>
       <h1 className="visually-hidden">WTW</h1>
       <PageHeader className="movie-card__head" isAuth={true} />
       <div className="movie-card__wrap">
         <div className="movie-card__info">
-          <Poster title={film.name} imageSrc={film.posterImage} />
+          <Poster title={name} image={posterImage} />
           <FilmHeadInfo
             film={film}
             renderButtons={() => actionButtons}

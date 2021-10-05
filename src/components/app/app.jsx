@@ -33,7 +33,9 @@ const App = () => {
         <Route path={`${FILMS}/:id`} exact>
           <FilmPage film={films[0]} />
         </Route>
-        <Route path={`${FILMS}/:id${REVIEW}`} component={ReviewPage} />
+        <Route path={`${FILMS}/:id${REVIEW}`}>
+          <ReviewPage film={films[0]} />
+        </Route>
         <Route path={`${PLAYER}/:id/`} exact component={PlayerPage} />
         <Route component={NotFoundPage} />
       </Switch>

@@ -19,7 +19,7 @@ const HomePage = ({genres, films}) => {
 };
 
 HomePage.propTypes = {
-  genres: PropTypes.arrayOf(PropTypes.object),
+  genres: PropTypes.arrayOf(PropTypes.string),
   films: PropTypes.arrayOf(filmProp).isRequired
 };
 

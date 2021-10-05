@@ -7,6 +7,7 @@ import FilmDetails from '../film-details/film-details';
 import {PosterSize} from '../../constants';
 
 const FilmPage = ({film}) => {
+  const {name, posterImage, backgroundImage} = film;
   const actionButtons = (
     <>
       <button className="btn btn--play movie-card__button" type="button">
@@ -29,7 +30,7 @@ const FilmPage = ({film}) => {
     <section className="movie-card movie-card--full">
       <div className="movie-card__hero">
         <div className="movie-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+          <img src={backgroundImage} alt={name} />
         </div>
         <h1 className="visually-hidden">WTW</h1>
         <PageHeader isAuth={true} className="movie-card__head" />
@@ -42,8 +43,8 @@ const FilmPage = ({film}) => {
         <div className="movie-card__info">
           <Poster
             size={PosterSize.LARGE}
-            title={film.title}
-            imageSrc={film.posterImage}
+            title={name}
+            image={posterImage}
           />
           <FilmDetails film={film} />
         </div>
