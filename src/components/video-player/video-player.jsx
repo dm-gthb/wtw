@@ -8,6 +8,7 @@ const VideoPlayer = ({src, poster, styles}) => {
       poster={poster}
       style={styles}
       autoPlay
+      muted
     />
   );
 };

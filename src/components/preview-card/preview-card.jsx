@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import classNames from 'classnames';
@@ -7,13 +7,10 @@ import {AppRoute} from '../../constants';
 import VideoPlayer from '../video-player/video-player';
 import videoStyles from './video-styles';
 
-const PreviewCard = ({className, film}) => {
+const PreviewCard = ({className, film, isVideoPlaying, onPlayVideo, onStopVideo}) => {
   const {id, name, previewImage, previewVideoLink} = film;
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-  const containerElement = useRef();
-
-  const handleMouseEnter = () => setIsVideoPlaying(true);
-  const handleMouseLeave = () => setIsVideoPlaying(false);
+  const handleMouseEnter = () => onPlayVideo(id);
+  const handleMouseLeave = () => onStopVideo();
 
   const renderContent = () => {
     if (isVideoPlaying) {
@@ -48,7 +45,6 @@ const PreviewCard = ({className, film}) => {
       className={classNames(`small-movie-card`, className)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      ref={containerElement}
     >
       {renderContent()}
     </article>
@@ -57,7 +53,10 @@ const PreviewCard = ({className, film}) => {
 
 PreviewCard.propTypes = {
   className: PropTypes.string.isRequired,
-  film: filmProp.isRequired
+  film: filmProp.isRequired,
+  isVideoPlaying: PropTypes.bool.isRequired,
+  onPlayVideo: PropTypes.func.isRequired,
+  onStopVideo: PropTypes.func.isRequired,
 };
 
 export default PreviewCard;
