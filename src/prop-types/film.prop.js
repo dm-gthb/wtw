@@ -16,4 +16,5 @@ export default shape({
   runTime: number.isRequired,
   genre: string.isRequired,
   released: number.isRequired,
+  previewVideoLink: string.isRequired,
 });
