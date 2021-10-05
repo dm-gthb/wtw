@@ -7,7 +7,6 @@ export default shape({
   name: string.isRequired,
   backgroundImage: string.isRequired,
   previewImage: string.isRequired,
-  posterImage: string.isRequired,
   description: string.isRequired,
   rating: number.isRequired,
   scoresCount: number.isRequired,

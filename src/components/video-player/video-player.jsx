@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import filmProp from '../../prop-types/film.prop';
 
-const VideoPlayer = ({film, styles}) => {
-  const {previewVideoLink, previewImage} = film;
-
+const VideoPlayer = ({src, poster, styles}) => {
   return (
     <video
-      src={previewVideoLink}
-      poster={previewImage}
+      src={src}
+      poster={poster}
       style={styles}
       autoPlay
     />
@@ -16,7 +13,8 @@ const VideoPlayer = ({film, styles}) => {
 };
 
 VideoPlayer.propTypes = {
-  film: filmProp.isRequired,
+  src: PropTypes.string.isRequired,
+  poster: PropTypes.string.isRequired,
   styles: PropTypes.object
 };
 
