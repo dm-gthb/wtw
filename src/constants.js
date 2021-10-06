@@ -13,7 +13,7 @@ export const PosterSize = {
   LARGE: `LARGE`,
 };
 
-export const FilmDetailsNavTitle = {
+export const FilmDetailsSection = {
   OVERVIEW: `Overview`,
   DETAILS: `Details`,
   REVIEWS: `Reviews`,
