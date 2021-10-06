@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-const Tabs = ({classList, tabs, onTabClick}) => {
-  const [activeTab, setActiveTab] = useState(tabs[0]);
+const Tabs = ({classList, tabs, onTabClick, defaultTab}) => {
+  const [activeTab, setActiveTab] = useState(defaultTab);
   const {containerClass, tabClass, activeTabClass, tabLabelClass} = classList;
   return (
     <ul className={containerClass}>
@@ -29,6 +29,7 @@ const Tabs = ({classList, tabs, onTabClick}) => {
 
 Tabs.propTypes = {
   tabs: PropTypes.arrayOf(PropTypes.string).isRequired,
+  defaultTab: PropTypes.string.isRequired,
   onTabClick: PropTypes.func.isRequired,
   classList: PropTypes.shape({
     containerClass: PropTypes.string,

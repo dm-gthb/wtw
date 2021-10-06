@@ -17,6 +17,7 @@ const DetailsTabs = ({onTabClick}) => {
         }}
         tabs={tabs}
         onTabClick={onTabClick}
+        defaultTab={tabs[0]}
       />
     </nav>
   );
