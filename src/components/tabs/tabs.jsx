@@ -7,22 +7,29 @@ const Tabs = ({classList, tabs, onTabClick, defaultTab}) => {
   const {containerClass, tabClass, activeTabClass, tabLabelClass} = classList;
   return (
     <ul className={containerClass}>
-      {tabs.map((tab) => (
-        <li key={tab} className={classNames(tabClass, {
-          [activeTabClass]: tab === activeTab
-        })}>
-          <span
-            className={tabLabelClass}
-            onClick={() => {
-              setActiveTab(tab);
-              onTabClick(tab);
-            }}
-            style={{cursor: `pointer`}}
-          >
-            {tab}
-          </span>
-        </li>
-      ))}
+      {tabs.map((tab) => {
+        const isActiveTab = tab === activeTab;
+        return (
+          <li key={tab} className={classNames(tabClass, {
+            [activeTabClass]: isActiveTab
+          })}>
+            {
+              isActiveTab ?
+                <span className={tabLabelClass}>{tab}</span> :
+                <span
+                  className={tabLabelClass}
+                  onClick={() => {
+                    setActiveTab(tab);
+                    onTabClick(tab);
+                  }}
+                  style={{cursor: `pointer`}}
+                >
+                  {tab}
+                </span>
+            }
+          </li>
+        );
+      })}
     </ul>
   );
 };
