@@ -1,38 +1,48 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {createSelector} from 'reselect';
-import {DEFAULT_GENRE_FILTER, LoadingState, SliceName} from '../../constants';
-import {films as mockFilms} from '../../mocks/mocks';
+import {
+  AppRoute,
+  DEFAULT_GENRE_FILTER,
+  LoadingState,
+  SliceName
+} from '../../constants';
+import api from '../../service/api';
 import {selectGenreFilter} from '../films-filter-slice/films-filter-slice';
 
 const initialState = {
-  films: mockFilms,
+  films: [],
   status: LoadingState.IDLE,
 };
+
+const FETCH_FILM_ACTION_NAME = `fetchFilms`;
+
+export const fetchFilms = createAsyncThunk(
+    `${SliceName.FILMS_DATA}/${FETCH_FILM_ACTION_NAME}`,
+    async () => {
+      const response = await api.get(AppRoute.FILMS);
+      return response.data;
+    }
+);
 
 const filmsDataSlice = createSlice({
   name: SliceName.FILMS_DATA,
   initialState,
-  reducers: {
-    requestFilms(state) {
-      state.films = [];
-      state.status = LoadingState.LOADING;
-    },
-    loadFilms(state, action) {
-      state.films = action.payload;
-      state.status = LoadingState.SUCCEEDED;
-    },
-    failFilmsLoading(state) {
-      state.films = [];
-      state.status = LoadingState.FAILED;
-    }
-  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchFilms.pending, (state) => {
+        state.films = [];
+        state.status = LoadingState.LOADING;
+      })
+      .addCase(fetchFilms.fulfilled, (state, action) => {
+        state.films = action.payload;
+        state.status = LoadingState.SUCCEEDED;
+      })
+      .addCase(fetchFilms.rejected, (state) => {
+        state.films = [];
+        state.status = LoadingState.FAILED;
+      });
+  }
 });
-
-export const {
-  requestFilms,
-  loadFilms,
-  failFilmsLoading,
-} = filmsDataSlice.actions;
 
 export default filmsDataSlice.reducer;
 

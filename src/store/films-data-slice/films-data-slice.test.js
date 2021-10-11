@@ -1,9 +1,5 @@
 import {LoadingState} from '../../constants';
-import reducer, {
-  failFilmsLoading,
-  loadFilms,
-  requestFilms,
-} from './films-data-slice';
+import reducer, {fetchFilms} from './films-data-slice';
 
 describe(`Reducer works correctly`, () => {
   const initialState = {
@@ -23,7 +19,7 @@ describe(`Reducer works correctly`, () => {
   };
 
   it(`should handle requesting films`, () => {
-    expect(reducer(initialState, requestFilms())).toEqual({
+    expect(reducer(initialState, fetchFilms.pending())).toEqual({
       ...initialState,
       films: [],
       status: LoadingState.LOADING,
@@ -38,7 +34,7 @@ describe(`Reducer works correctly`, () => {
       }
     ];
 
-    expect(reducer(initialState, loadFilms(loadedFilms))).toEqual({
+    expect(reducer(initialState, fetchFilms.fulfilled(loadedFilms))).toEqual({
       ...initialState,
       films: loadedFilms,
       status: LoadingState.SUCCEEDED,
@@ -46,7 +42,7 @@ describe(`Reducer works correctly`, () => {
   });
 
   it(`should handle loading error`, () => {
-    expect(reducer(initialState, failFilmsLoading(`error`))).toEqual({
+    expect(reducer(initialState, fetchFilms.rejected())).toEqual({
       ...initialState,
       films: [],
       status: LoadingState.FAILED,
