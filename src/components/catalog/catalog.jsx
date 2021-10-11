@@ -1,13 +1,21 @@
-import React, {useState} from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import FilmsList from '../films-list/films-list';
 import GenresTabs from '../genres-tabs/genres-tabs';
+import {
+  selectFilmsByGenre,
+  selectGenres,
+  setGenreFilter
+} from '../../store/films/films-slice';
 
-const Catalog = ({genres, films}) => {
+const Catalog = () => {
+  const dispatch = useDispatch();
+  const genres = useSelector(selectGenres);
   const defaultGenre = genres[0];
-  const [selectedGenre, setSelectedGenre] = useState(defaultGenre);
+  const films = useSelector(selectFilmsByGenre);
+
   const handleTabClick = (genre) => {
-    setSelectedGenre(genre);
+    dispatch(setGenreFilter(genre));
   };
 
   const renderGenres = () => {
@@ -36,9 +44,6 @@ const Catalog = ({genres, films}) => {
   );
 };
 
-Catalog.propTypes = {
-  genres: PropTypes.arrayOf(PropTypes.string),
-  films: PropTypes.arrayOf(PropTypes.object).isRequired
-};
+Catalog.propTypes = {};
 
 export default Catalog;

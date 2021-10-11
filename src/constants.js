@@ -22,3 +22,5 @@ export const FilmDetailsSection = {
 export const MAX_RATING = 10;
 
 export const PREVIEW_VIDEO_PLAYING_TIMEOUT = 1000;
+
+export const DEFAULT_GENRE_FILTER = `All genres`;
