@@ -3,6 +3,7 @@ import reducer, {
   increaseCardsCount,
   loadFilms,
   requestFilms,
+  resetCardsCount,
   setGenreFilter
 } from './films-slice';
 
@@ -26,10 +27,9 @@ describe(`Reducer works correctly`, () => {
 
   it(`should handle requesting films`, () => {
     expect(reducer(initialState, requestFilms())).toEqual({
+      ...initialState,
       films: [],
       areFilmsLoading: true,
-      loadingError: null,
-      genreFilter: `default`,
     });
   });
 
