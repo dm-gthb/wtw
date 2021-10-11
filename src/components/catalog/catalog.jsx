@@ -1,6 +1,6 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {DEFAULT_GENRE_FILTER} from '../../constants';
+import {DEFAULT_GENRE_FILTER, MAX_FILMS_CARDS_TO_RENDER_ONCE} from '../../constants';
 import FilmsList from '../films-list/films-list';
 import GenresTabs from '../genres-tabs/genres-tabs';
 import {
@@ -15,12 +15,11 @@ import {
 } from '../../store/films-filter-slice/films-filter-slice';
 
 const Catalog = () => {
-  const MAX_FILMS_CARDS_TO_RENDER_ONCE = 8;
   const dispatch = useDispatch();
   const genres = useSelector(selectGenres);
   const films = useSelector(selectFilmsByGenre);
-  const alreadyRenderedFilmCardsCount = useSelector(selectCardsCount);
-  const filmCardsToRender = films.slice(0, alreadyRenderedFilmCardsCount + MAX_FILMS_CARDS_TO_RENDER_ONCE);
+  const currentCardsCount = useSelector(selectCardsCount);
+  const filmCardsToRender = films.slice(0, currentCardsCount);
 
   const handleTabClick = (genre) => {
     dispatch(setGenreFilter(genre));
@@ -28,7 +27,9 @@ const Catalog = () => {
   };
 
   const handleShowMoreButtonClick = () => {
-    dispatch(increaseCardsCount(MAX_FILMS_CARDS_TO_RENDER_ONCE));
+    const remainingCardsCount = films.length - currentCardsCount;
+    const countToIncrease = Math.min(remainingCardsCount, MAX_FILMS_CARDS_TO_RENDER_ONCE);
+    dispatch(increaseCardsCount(countToIncrease));
   };
 
   const renderGenres = () => {
@@ -45,7 +46,7 @@ const Catalog = () => {
   };
 
   const renderShowMoreButton = () => {
-    if (alreadyRenderedFilmCardsCount + MAX_FILMS_CARDS_TO_RENDER_ONCE < films.length) {
+    if (currentCardsCount < films.length) {
       return (
         <button
           className="catalog__button"

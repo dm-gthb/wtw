@@ -1,9 +1,13 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {DEFAULT_GENRE_FILTER, SliceName} from '../../constants';
+import {
+  DEFAULT_GENRE_FILTER,
+  MAX_FILMS_CARDS_TO_RENDER_ONCE,
+  SliceName
+} from '../../constants';
 
 const initialState = {
   genreFilter: DEFAULT_GENRE_FILTER,
-  cardsCount: 0
+  cardsCount: MAX_FILMS_CARDS_TO_RENDER_ONCE
 };
 
 const filmsFilterSlice = createSlice({
@@ -17,7 +21,7 @@ const filmsFilterSlice = createSlice({
       state.cardsCount = state.cardsCount + action.payload;
     },
     resetCardsCount(state) {
-      state.cardsCount = 0;
+      state.cardsCount = MAX_FILMS_CARDS_TO_RENDER_ONCE;
     }
   },
 });
