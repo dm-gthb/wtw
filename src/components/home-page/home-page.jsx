@@ -1,26 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Promo from '../promo/promo';
 import Catalog from '../catalog/catalog';
 import PageFooter from '../page-footer/page-footer';
-import filmProp from '../../prop-types/film.prop';
+import {films} from '../../mocks/mocks';
 
-const HomePage = ({genres, films}) => {
-  const promoFilm = films[0];
+const HomePage = () => {
   return (
     <div>
-      <Promo film={promoFilm} />
+      <Promo film={films[0]} />
       <div className="page-content">
-        <Catalog genres={genres} films={films} />
+        <Catalog />
         <PageFooter />
       </div>
     </div>
   );
-};
-
-HomePage.propTypes = {
-  genres: PropTypes.arrayOf(PropTypes.string),
-  films: PropTypes.arrayOf(filmProp).isRequired
 };
 
 export default HomePage;

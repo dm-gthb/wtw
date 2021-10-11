@@ -8,7 +8,7 @@ import MyFilmsPage from '../my-films-page/my-films-page';
 import ReviewPage from '../review-page/review-page';
 import PlayerPage from '../player-page/player-page';
 import NotFoundPage from '../not-found-page/not-found-page';
-import {genres, films} from '../../mocks/mocks';
+import {films} from '../../mocks/mocks';
 
 const App = () => {
   const {
@@ -24,7 +24,7 @@ const App = () => {
     <Router>
       <Switch>
         <Route path={ROOT} exact>
-          <HomePage genres={genres} films={films} />
+          <HomePage />
         </Route>
         <Route path={LOGIN} exact component={LoginPage} />
         <Route path={MY_LIST} exact>

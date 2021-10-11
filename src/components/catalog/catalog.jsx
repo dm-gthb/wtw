@@ -7,11 +7,12 @@ import {
   selectGenres,
   setGenreFilter
 } from '../../store/films/films-slice';
+import {DEFAULT_GENRE_FILTER} from '../../constants';
 
 const Catalog = () => {
   const dispatch = useDispatch();
   const genres = useSelector(selectGenres);
-  const defaultGenre = genres[0];
+  const defaultGenre = DEFAULT_GENRE_FILTER;
   const films = useSelector(selectFilmsByGenre);
 
   const handleTabClick = (genre) => {
@@ -43,7 +44,5 @@ const Catalog = () => {
     </section>
   );
 };
-
-Catalog.propTypes = {};
 
 export default Catalog;
