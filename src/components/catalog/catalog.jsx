@@ -3,20 +3,30 @@ import {useDispatch, useSelector} from 'react-redux';
 import FilmsList from '../films-list/films-list';
 import GenresTabs from '../genres-tabs/genres-tabs';
 import {
+  increaseCardsCount,
+  resetCardsCount,
+  selectCardsCount,
   selectFilmsByGenre,
   selectGenres,
   setGenreFilter
-} from '../../store/films/films-slice';
+} from '../../store/films-slice/films-slice';
 import {DEFAULT_GENRE_FILTER} from '../../constants';
 
 const Catalog = () => {
+  const MAX_FILMS_CARDS_TO_RENDER_ONCE = 8;
   const dispatch = useDispatch();
   const genres = useSelector(selectGenres);
-  const defaultGenre = DEFAULT_GENRE_FILTER;
   const films = useSelector(selectFilmsByGenre);
+  const alreadyRenderedFilmCardsCount = useSelector(selectCardsCount);
+  const filmCardsToRender = films.slice(0, alreadyRenderedFilmCardsCount + MAX_FILMS_CARDS_TO_RENDER_ONCE);
 
   const handleTabClick = (genre) => {
     dispatch(setGenreFilter(genre));
+    dispatch(resetCardsCount());
+  };
+
+  const handleShowMoreButtonClick = () => {
+    dispatch(increaseCardsCount(MAX_FILMS_CARDS_TO_RENDER_ONCE));
   };
 
   const renderGenres = () => {
@@ -25,11 +35,25 @@ const Catalog = () => {
         <GenresTabs
           genres={genres}
           onTabClick={handleTabClick}
-          defaultGenre={defaultGenre}
+          defaultGenre={DEFAULT_GENRE_FILTER}
         />
       );
     }
+    return null;
+  };
 
+  const renderShowMoreButton = () => {
+    if (alreadyRenderedFilmCardsCount + MAX_FILMS_CARDS_TO_RENDER_ONCE < films.length) {
+      return (
+        <button
+          className="catalog__button"
+          type="button"
+          onClick={handleShowMoreButtonClick}
+        >
+          Show more
+        </button>
+      );
+    }
     return null;
   };
 
@@ -37,10 +61,8 @@ const Catalog = () => {
     <section className="catalog">
       <h2 className="catalog__title visually-hidden">Catalog</h2>
       {renderGenres()}
-      <FilmsList films={films} />
-      <div className="catalog__more">
-        <button className="catalog__button" type="button">Show more</button>
-      </div>
+      <FilmsList films={filmCardsToRender} />
+      {renderShowMoreButton()}
     </section>
   );
 };

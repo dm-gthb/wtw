@@ -9,6 +9,7 @@ const initialState = {
   areFilmsLoading: false,
   loadingError: null,
   genreFilter: DEFAULT_GENRE_FILTER,
+  cardsCount: 0
 };
 
 const filmsSlice = createSlice({
@@ -28,11 +29,25 @@ const filmsSlice = createSlice({
     },
     setGenreFilter(state, action) {
       state.genreFilter = action.payload;
+    },
+    increaseCardsCount(state, action) {
+      state.cardsCount = state.cardsCount + action.payload;
+    },
+    resetCardsCount(state) {
+      state.cardsCount = 0;
     }
   },
 });
 
-export const {requestFilms, loadFilms, failFilmsLoading, setGenreFilter} = filmsSlice.actions;
+export const {
+  requestFilms,
+  loadFilms,
+  failFilmsLoading,
+  setGenreFilter,
+  increaseCardsCount,
+  resetCardsCount,
+} = filmsSlice.actions;
+
 export default filmsSlice.reducer;
 
 export const selectFilms = (state) => {
@@ -51,3 +66,5 @@ export const selectFilmsByGenre = createSelector(
     selectGenreFilter,
     (films, genre) => genre === DEFAULT_GENRE_FILTER ? films : films.filter((film) => film.genre === genre)
 );
+
+export const selectCardsCount = (state) => state[SliceName.FILMS].cardsCount;
