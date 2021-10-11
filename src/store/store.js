@@ -1,6 +1,6 @@
 import {configureStore} from '@reduxjs/toolkit';
 import filmsReducer from './films-slice/films-slice';
-import {SliceName} from './slice-name';
+import {SliceName} from '../constants';
 
 export default configureStore(
     {

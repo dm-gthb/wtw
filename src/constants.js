@@ -19,6 +19,18 @@ export const FilmDetailsSection = {
   REVIEWS: `Reviews`,
 };
 
+export const LoadingState = {
+  IDLE: `IDLE`,
+  LOADING: `LOADING`,
+  SUCCEEDED: `SUCCEEEDED`,
+  FAILED: `FAILED`,
+};
+
+export const SliceName = {
+  FILMS: `FILMS`,
+  USER: `USER`,
+};
+
 export const MAX_RATING = 10;
 
 export const PREVIEW_VIDEO_PLAYING_TIMEOUT = 1000;

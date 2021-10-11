@@ -1,13 +1,11 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {createSelector} from 'reselect';
-import {DEFAULT_GENRE_FILTER} from '../../constants';
+import {DEFAULT_GENRE_FILTER, LoadingState, SliceName} from '../../constants';
 import {films as mockFilms} from '../../mocks/mocks';
-import {SliceName} from '../slice-name';
 
 const initialState = {
   films: mockFilms,
-  areFilmsLoading: false,
-  loadingError: null,
+  status: LoadingState.IDLE,
   genreFilter: DEFAULT_GENRE_FILTER,
   cardsCount: 0
 };
@@ -18,14 +16,15 @@ const filmsSlice = createSlice({
   reducers: {
     requestFilms(state) {
       state.films = [];
-      state.areFilmsLoading = true;
+      state.status = LoadingState.LOADING;
     },
     loadFilms(state, action) {
       state.films = action.payload;
-      state.areFilmsLoading = false;
+      state.status = LoadingState.SUCCEEDED;
     },
-    failFilmsLoading(state, action) {
-      state.loadingError = action.payload;
+    failFilmsLoading(state) {
+      state.films = [];
+      state.status = LoadingState.FAILED;
     },
     setGenreFilter(state, action) {
       state.genreFilter = action.payload;

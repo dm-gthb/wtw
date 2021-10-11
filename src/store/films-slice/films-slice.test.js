@@ -1,3 +1,4 @@
+import {LoadingState} from '../../constants';
 import reducer, {
   failFilmsLoading,
   increaseCardsCount,
@@ -19,8 +20,7 @@ describe(`Reducer works correctly`, () => {
         title: `Film 2`,
       },
     ],
-    areFilmsLoading: false,
-    loadingError: null,
+    status: LoadingState.IDLE,
     genreFilter: `default`,
     cardsCount: 0,
   };
@@ -29,7 +29,7 @@ describe(`Reducer works correctly`, () => {
     expect(reducer(initialState, requestFilms())).toEqual({
       ...initialState,
       films: [],
-      areFilmsLoading: true,
+      status: LoadingState.LOADING,
     });
   });
 
@@ -44,13 +44,15 @@ describe(`Reducer works correctly`, () => {
     expect(reducer(initialState, loadFilms(loadedFilms))).toEqual({
       ...initialState,
       films: loadedFilms,
+      status: LoadingState.SUCCEEDED,
     });
   });
 
   it(`should handle loading error`, () => {
     expect(reducer(initialState, failFilmsLoading(`error`))).toEqual({
       ...initialState,
-      loadingError: `error`,
+      films: [],
+      status: LoadingState.FAILED,
     });
   });
 
