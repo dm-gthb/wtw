@@ -2,16 +2,15 @@ import {createSlice} from '@reduxjs/toolkit';
 import {createSelector} from 'reselect';
 import {DEFAULT_GENRE_FILTER, LoadingState, SliceName} from '../../constants';
 import {films as mockFilms} from '../../mocks/mocks';
+import {selectGenreFilter} from '../films-filter-slice/films-filter-slice';
 
 const initialState = {
   films: mockFilms,
   status: LoadingState.IDLE,
-  genreFilter: DEFAULT_GENRE_FILTER,
-  cardsCount: 0
 };
 
-const filmsSlice = createSlice({
-  name: SliceName.FILMS,
+const filmsDataSlice = createSlice({
+  name: SliceName.FILMS_DATA,
   initialState,
   reducers: {
     requestFilms(state) {
@@ -25,15 +24,6 @@ const filmsSlice = createSlice({
     failFilmsLoading(state) {
       state.films = [];
       state.status = LoadingState.FAILED;
-    },
-    setGenreFilter(state, action) {
-      state.genreFilter = action.payload;
-    },
-    increaseCardsCount(state, action) {
-      state.cardsCount = state.cardsCount + action.payload;
-    },
-    resetCardsCount(state) {
-      state.cardsCount = 0;
     }
   },
 });
@@ -42,18 +32,13 @@ export const {
   requestFilms,
   loadFilms,
   failFilmsLoading,
-  setGenreFilter,
-  increaseCardsCount,
-  resetCardsCount,
-} = filmsSlice.actions;
+} = filmsDataSlice.actions;
 
-export default filmsSlice.reducer;
+export default filmsDataSlice.reducer;
 
 export const selectFilms = (state) => {
-  return state[SliceName.FILMS].films;
+  return state[SliceName.FILMS_DATA].films;
 };
-
-export const selectGenreFilter = (state) => state[SliceName.FILMS].genreFilter;
 
 export const selectGenres = createSelector(
     selectFilms,
@@ -65,5 +50,3 @@ export const selectFilmsByGenre = createSelector(
     selectGenreFilter,
     (films, genre) => genre === DEFAULT_GENRE_FILTER ? films : films.filter((film) => film.genre === genre)
 );
-
-export const selectCardsCount = (state) => state[SliceName.FILMS].cardsCount;

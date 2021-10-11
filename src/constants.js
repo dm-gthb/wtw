@@ -27,7 +27,8 @@ export const LoadingState = {
 };
 
 export const SliceName = {
-  FILMS: `FILMS`,
+  FILMS_DATA: `FILMS_DATA`,
+  FILMS_FILTER: `FILMS_FILTER`,
   USER: `USER`,
 };
 

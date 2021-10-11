@@ -1,16 +1,18 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {DEFAULT_GENRE_FILTER} from '../../constants';
 import FilmsList from '../films-list/films-list';
 import GenresTabs from '../genres-tabs/genres-tabs';
+import {
+  selectFilmsByGenre,
+  selectGenres,
+} from '../../store/films-data-slice/films-data-slice';
 import {
   increaseCardsCount,
   resetCardsCount,
   selectCardsCount,
-  selectFilmsByGenre,
-  selectGenres,
   setGenreFilter
-} from '../../store/films-slice/films-slice';
-import {DEFAULT_GENRE_FILTER} from '../../constants';
+} from '../../store/films-filter-slice/films-filter-slice';
 
 const Catalog = () => {
   const MAX_FILMS_CARDS_TO_RENDER_ONCE = 8;
