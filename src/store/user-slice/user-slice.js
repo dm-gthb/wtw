@@ -1,9 +1,9 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import {AuthStatus, LoadingState, SliceName} from '../../constants';
+import {AuthStatus, LoadingStatus, SliceName} from '../../constants';
 
 const initialState = {
   auth: AuthStatus.NO_AUTH,
-  status: LoadingState.IDLE,
+  status: LoadingStatus.IDLE,
 };
 
 const CHECK_AUTH_STATUS_ACTION_NAME = `checkAuth`;
@@ -22,15 +22,15 @@ const userSlice = createSlice({
     builder
       .addCase(checkAuth.pending, (state) => {
         state.auth = AuthStatus.NO_AUTH;
-        state.status = LoadingState.LOADING;
+        state.status = LoadingStatus.LOADING;
       })
       .addCase(checkAuth.fulfilled, (state, action) => {
         state.auth = action.payload;
-        state.status = LoadingState.SUCCEEDED;
+        state.status = LoadingStatus.SUCCEEDED;
       })
       .addCase(checkAuth.rejected, (state) => {
         state.auth = AuthStatus.NO_AUTH;
-        state.status = LoadingState.FAILED;
+        state.status = LoadingStatus.FAILED;
       });
   }
 });

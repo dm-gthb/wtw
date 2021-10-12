@@ -2,14 +2,14 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {createSelector} from 'reselect';
 import {
   DEFAULT_GENRE_FILTER,
-  LoadingState,
+  LoadingStatus,
   SliceName
 } from '../../constants';
 import {selectGenreFilter} from '../films-filter-slice/films-filter-slice';
 
 const initialState = {
   films: [],
-  status: LoadingState.IDLE,
+  status: LoadingStatus.IDLE,
 };
 
 const FETCH_FILM_ACTION_NAME = `fetchFilms`;
@@ -29,15 +29,15 @@ const filmsDataSlice = createSlice({
     builder
       .addCase(fetchFilms.pending, (state) => {
         state.films = [];
-        state.status = LoadingState.LOADING;
+        state.status = LoadingStatus.LOADING;
       })
       .addCase(fetchFilms.fulfilled, (state, action) => {
         state.films = action.payload;
-        state.status = LoadingState.SUCCEEDED;
+        state.status = LoadingStatus.SUCCEEDED;
       })
       .addCase(fetchFilms.rejected, (state) => {
         state.films = [];
-        state.status = LoadingState.FAILED;
+        state.status = LoadingStatus.FAILED;
       });
   }
 });

@@ -1,4 +1,4 @@
-import {LoadingState} from '../../constants';
+import {LoadingStatus} from '../../constants';
 import reducer, {fetchFilms} from './films-data-slice';
 
 describe(`Reducer works correctly`, () => {
@@ -13,7 +13,7 @@ describe(`Reducer works correctly`, () => {
         title: `Film 2`,
       },
     ],
-    status: LoadingState.IDLE,
+    status: LoadingStatus.IDLE,
     genreFilter: `default`,
     cardsCount: 0,
   };
@@ -22,7 +22,7 @@ describe(`Reducer works correctly`, () => {
     expect(reducer(initialState, fetchFilms.pending())).toEqual({
       ...initialState,
       films: [],
-      status: LoadingState.LOADING,
+      status: LoadingStatus.LOADING,
     });
   });
 
@@ -37,7 +37,7 @@ describe(`Reducer works correctly`, () => {
     expect(reducer(initialState, fetchFilms.fulfilled(loadedFilms))).toEqual({
       ...initialState,
       films: loadedFilms,
-      status: LoadingState.SUCCEEDED,
+      status: LoadingStatus.SUCCEEDED,
     });
   });
 
@@ -45,7 +45,7 @@ describe(`Reducer works correctly`, () => {
     expect(reducer(initialState, fetchFilms.rejected())).toEqual({
       ...initialState,
       films: [],
-      status: LoadingState.FAILED,
+      status: LoadingStatus.FAILED,
     });
   });
 });

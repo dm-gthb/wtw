@@ -1,6 +1,6 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {DEFAULT_GENRE_FILTER, LoadingState, MAX_FILMS_CARDS_TO_RENDER_ONCE} from '../../constants';
+import {DEFAULT_GENRE_FILTER, LoadingStatus, MAX_FILMS_CARDS_TO_RENDER_ONCE} from '../../constants';
 import FilmsList from '../films-list/films-list';
 import GenresTabs from '../genres-tabs/genres-tabs';
 import Spinner from '../spinner/spinner';
@@ -63,7 +63,7 @@ const Catalog = () => {
     return null;
   };
 
-  if (loadingStatus === LoadingState.LOADING) {
+  if (loadingStatus === LoadingStatus.LOADING) {
     return <Spinner />;
   }
 

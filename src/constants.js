@@ -19,7 +19,7 @@ export const FilmDetailsSection = {
   REVIEWS: `Reviews`,
 };
 
-export const LoadingState = {
+export const LoadingStatus = {
   IDLE: `IDLE`,
   LOADING: `LOADING`,
   SUCCEEDED: `SUCCEEEDED`,
