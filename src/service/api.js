@@ -1,16 +1,36 @@
 import axios from 'axios';
-import {AppRoute} from '../constants';
+import {AppRoute, AuthStatus, HttpCode} from '../constants';
 
 const BACKEND_URL = ``;
 const REQUEST_TIMEOUT = 5000;
 
 class API {
-  constructor(baseURL, timeout) {
+  constructor(baseURL, timeout, onUnauthorized) {
     this._api = axios.create({
       baseURL,
       timeout,
       withCredentials: true
     });
+    this._onUnauthorized = onUnauthorized;
+    this._bindResponseInterceptors();
+  }
+
+  _bindResponseInterceptors() {
+    this._api.interceptors.response.use(this._handleSuccessedResponse, this._handleFailedResponse);
+  }
+
+  _handleSuccessedResponse(response) {
+    return response;
+  }
+
+  _handleFailedResponse(err) {
+    const {response} = err;
+    if (response.status === HttpCode.UNAUTHORIZED) {
+      this._onUnauthorized();
+      throw err;
+    }
+
+    throw err;
   }
 
   async _load(url, options) {
@@ -21,6 +41,15 @@ class API {
   async getFilms() {
     const rawFilmsData = await this._load(AppRoute.FILMS);
     return rawFilmsData.map(this._transformFilmServerData);
+  }
+
+  async checkAuth() {
+    try {
+      await this._load(AppRoute.LOGIN);
+      return AuthStatus.AUTH;
+    } catch (err) {
+      return AuthStatus.NO_AUTH;
+    }
   }
 
   _transformFilmServerData(film) {
@@ -43,4 +72,4 @@ class API {
   }
 }
 
-export const createAPI = () => new API(BACKEND_URL, REQUEST_TIMEOUT);
+export const createAPI = (onUnauthorized) => new API(BACKEND_URL, REQUEST_TIMEOUT, onUnauthorized);

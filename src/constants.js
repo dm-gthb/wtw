@@ -26,10 +26,19 @@ export const LoadingState = {
   FAILED: `FAILED`,
 };
 
+export const AuthStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`,
+};
+
 export const SliceName = {
   FILMS_DATA: `FILMS_DATA`,
   FILMS_FILTER: `FILMS_FILTER`,
   USER: `USER`,
+};
+
+export const HttpCode = {
+  UNAUTHORIZED: 401,
 };
 
 export const MAX_RATING = 10;
