@@ -8,19 +8,21 @@ describe(`Reducer works correctly`, () => {
   };
 
   it(`should handle loading auth status`, () => {
-    expect(reducer(initialState, checkAuth.pending)).toEqual({
+    expect(reducer(initialState, checkAuth.pending())).toEqual({
       auth: AuthStatus.NO_AUTH,
       status: LoadingState.LOADING,
     });
   });
+
   it(`should handle derived auth status`, () => {
     expect(reducer(initialState, checkAuth.fulfilled(AuthStatus.AUTH))).toEqual({
       auth: AuthStatus.AUTH,
       status: LoadingState.SUCCEEDED,
     });
   });
+
   it(`should handle auth status`, () => {
-    expect(reducer(initialState, checkAuth.rejected)).toEqual({
+    expect(reducer(initialState, checkAuth.rejected())).toEqual({
       auth: AuthStatus.NO_AUTH,
       status: LoadingState.FAILED,
     });
