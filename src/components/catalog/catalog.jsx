@@ -1,11 +1,13 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {DEFAULT_GENRE_FILTER, MAX_FILMS_CARDS_TO_RENDER_ONCE} from '../../constants';
+import {DEFAULT_GENRE_FILTER, LoadingState, MAX_FILMS_CARDS_TO_RENDER_ONCE} from '../../constants';
 import FilmsList from '../films-list/films-list';
 import GenresTabs from '../genres-tabs/genres-tabs';
+import Spinner from '../spinner/spinner';
 import {
   selectFilmsByGenre,
   selectGenres,
+  selectLoadingStatus,
 } from '../../store/films-data-slice/films-data-slice';
 import {
   increaseCardsCount,
@@ -19,6 +21,7 @@ const Catalog = () => {
   const genres = useSelector(selectGenres);
   const films = useSelector(selectFilmsByGenre);
   const currentCardsCount = useSelector(selectCardsCount);
+  const loadingStatus = useSelector(selectLoadingStatus);
   const filmCardsToRender = films.slice(0, currentCardsCount);
 
   const handleTabClick = (genre) => {
@@ -59,6 +62,10 @@ const Catalog = () => {
     }
     return null;
   };
+
+  if (loadingStatus === LoadingState.LOADING) {
+    return <Spinner />;
+  }
 
   return (
     <section className="catalog">

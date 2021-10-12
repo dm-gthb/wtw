@@ -58,3 +58,5 @@ export const selectFilmsByGenre = createSelector(
     selectGenreFilter,
     (films, genre) => genre === DEFAULT_GENRE_FILTER ? films : films.filter((film) => film.genre === genre)
 );
+
+export const selectLoadingStatus = (state) => state[SliceName.FILMS_DATA].status;
