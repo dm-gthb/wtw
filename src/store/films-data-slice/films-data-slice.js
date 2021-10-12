@@ -1,12 +1,10 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {createSelector} from 'reselect';
 import {
-  AppRoute,
   DEFAULT_GENRE_FILTER,
   LoadingState,
   SliceName
 } from '../../constants';
-import api from '../../service/api';
 import {selectGenreFilter} from '../films-filter-slice/films-filter-slice';
 
 const initialState = {
@@ -18,9 +16,9 @@ const FETCH_FILM_ACTION_NAME = `fetchFilms`;
 
 export const fetchFilms = createAsyncThunk(
     `${SliceName.FILMS_DATA}/${FETCH_FILM_ACTION_NAME}`,
-    async () => {
-      const response = await api.get(AppRoute.FILMS);
-      return response.data;
+    async (_, {extra: api}) => {
+      const films = await api.getFilms();
+      return films;
     }
 );
 
