@@ -2,8 +2,8 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import browserHistory from '../../browser-history';
 import {AuthStatus, SliceName} from '../../constants';
 
-const CHECK_AUTH_STATUS_ACTION_NAME = `checkAuth`;
-const LOGIN_ACTION_NAME = `login`;
+const CHECK_AUTH_STATUS_ACTION = `checkAuth`;
+const LOGIN_ACTION = `login`;
 
 const initialState = {
   auth: AuthStatus.NO_AUTH,
@@ -16,7 +16,7 @@ const handleUserData = (userData) => ({
 });
 
 export const checkAuth = createAsyncThunk(
-    `${SliceName.USER}/${CHECK_AUTH_STATUS_ACTION_NAME}`,
+    `${SliceName.USER}/${CHECK_AUTH_STATUS_ACTION}`,
     async (_, {extra: api}) => {
       const userData = await api.checkAuth();
       return handleUserData(userData);
@@ -24,7 +24,7 @@ export const checkAuth = createAsyncThunk(
 );
 
 export const login = createAsyncThunk(
-    `${SliceName.USER}/${LOGIN_ACTION_NAME}`,
+    `${SliceName.USER}/${LOGIN_ACTION}`,
     async (data, {extra: api}) => {
       const userData = await api.login(data);
       if (userData) {
