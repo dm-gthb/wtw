@@ -2,10 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import App from './components/app/app';
+import {fetchFilms} from './store/films-data-slice/films-data-slice';
 import store from './store/store';
 import {checkAuth} from './store/user-slice/user-slice';
 
 store.dispatch(checkAuth());
+store.dispatch(fetchFilms());
 
 ReactDOM.render(
     <Provider store={store}>
