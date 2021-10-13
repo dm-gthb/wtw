@@ -4,10 +4,13 @@ import PageHeader from '../page-header/page-header';
 import FilmHeadInfo from '../film-head-info/film-head-info';
 import Poster from '../poster/poster';
 import FilmDetails from '../film-details/film-details';
-import {PosterSize} from '../../constants';
+import {AuthStatus, PosterSize} from '../../constants';
+import {useSelector} from 'react-redux';
+import {selectAuthStatus} from '../../store/user-slice/user-slice';
 
 const FilmFullInfo = ({film}) => {
   const {name, posterImage, backgroundImage} = film;
+  const authStatus = useSelector(selectAuthStatus);
   const actionButtons = (
     <>
       <button className="btn btn--play movie-card__button" type="button">
@@ -22,7 +25,12 @@ const FilmFullInfo = ({film}) => {
         </svg>
         <span>My list</span>
       </button>
-      <a href="add-review.html" className="btn movie-card__button">Add review</a>
+      {
+        authStatus === AuthStatus.AUTH &&
+        <button className="btn movie-card__button">
+          Add review
+        </button>
+      }
     </>
   );
 

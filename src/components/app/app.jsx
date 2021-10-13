@@ -37,7 +37,7 @@ const App = () => {
           render={() => <MyFilmsPage films={films} />}
         />
         <Route path={`${FILMS}/:id`} exact>
-          <FilmPage film={films[0]} />
+          <FilmPage />
         </Route>
         <PrivateRoute
           path={`${FILMS}/:id${REVIEW}`}
