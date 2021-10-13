@@ -33,7 +33,7 @@ const FilmFullInfo = ({film}) => {
           <img src={backgroundImage} alt={name} />
         </div>
         <h1 className="visually-hidden">WTW</h1>
-        <PageHeader isAuth={true} className="movie-card__head" />
+        <PageHeader className="movie-card__head" />
         <div className="movie-card__wrap">
           <FilmHeadInfo film={film} renderButtons={() => actionButtons} />
         </div>

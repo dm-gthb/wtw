@@ -1,10 +1,14 @@
 import React from 'react';
+import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {Link} from 'react-router-dom';
 import Logo from '../logo/logo';
+import selectAuthStatus from '../../store/user-slice/user-slice';
+import {AuthStatus} from '../../constants';
 
-const PageHeader = ({isAuth, isUserBlockShown = true, className, children}) => {
+const PageHeader = ({isUserBlockShown = true, className, children}) => {
+  const authStatus = useDispatch(selectAuthStatus);
   const renderUserBlock = (isAuthData) => {
     const userAvatar = (
       <div className="user-block__avatar">
@@ -23,13 +27,12 @@ const PageHeader = ({isAuth, isUserBlockShown = true, className, children}) => {
     <header className={classNames(`page-header`, className)}>
       <Logo isLight={false} />
       {children}
-      {isUserBlockShown && renderUserBlock(isAuth)}
+      {isUserBlockShown && renderUserBlock(authStatus === AuthStatus.AUTH)}
     </header>
   );
 };
 
 PageHeader.propTypes = {
-  isAuth: PropTypes.bool.isRequired,
   isUserBlockShown: PropTypes.bool,
   className: PropTypes.string,
   children: PropTypes.node,

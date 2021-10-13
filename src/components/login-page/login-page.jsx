@@ -5,7 +5,7 @@ import PageHeader from '../page-header/page-header';
 const LoginPage = () => {
   return (
     <div className="user-page">
-      <PageHeader className="user-page__head" isAuth={false} isUserBlockShown={false}>
+      <PageHeader className="user-page__head" isUserBlockShown={false}>
         <h1 className="page-title user-page__title">Sign in</h1>
       </PageHeader>
       <div className="sign-in user-page__content">

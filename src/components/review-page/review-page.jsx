@@ -14,7 +14,7 @@ const ReviewPage = ({film}) => {
           <img src={backgroundImage} alt={name} />
         </div>
         <h1 className="visually-hidden">WTW</h1>
-        <PageHeader isAuth={true} />
+        <PageHeader/>
         <Poster
           size={PosterSize.SMALL}
           title={name}

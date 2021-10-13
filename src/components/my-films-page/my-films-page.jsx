@@ -8,7 +8,7 @@ import PageHeader from '../page-header/page-header';
 const MyFilmsPage = ({films}) => {
   return (
     <div className="user-page">
-      <PageHeader isAuth={true} className="user-page__head">
+      <PageHeader className="user-page__head">
         <h1 className="page-title user-page__title">My List</h1>
       </PageHeader>
       <Catalog films={films} />

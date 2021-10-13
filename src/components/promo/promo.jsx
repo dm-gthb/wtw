@@ -27,7 +27,7 @@ const Promo = ({film}) => {
         <img src={backgroundImage} alt={name} />
       </div>
       <h1 className="visually-hidden">WTW</h1>
-      <PageHeader className="movie-card__head" isAuth={true} />
+      <PageHeader className="movie-card__head" />
       <div className="movie-card__wrap">
         <div className="movie-card__info">
           <Poster title={name} image={posterImage} />
