@@ -1,4 +1,5 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import browserHistory from '../../browser-history';
 import {AuthStatus, SliceName} from '../../constants';
 
 const CHECK_AUTH_STATUS_ACTION_NAME = `checkAuth`;
@@ -26,6 +27,9 @@ export const login = createAsyncThunk(
     `${SliceName.USER}/${LOGIN_ACTION_NAME}`,
     async (data, {extra: api}) => {
       const userData = await api.login(data);
+      if (userData) {
+        browserHistory.push(`/`);
+      }
       return handleUserData(userData);
     }
 );

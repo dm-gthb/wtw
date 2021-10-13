@@ -1,5 +1,5 @@
 import React from 'react';
-import {Switch, Route, BrowserRouter as Router} from 'react-router-dom';
+import {Switch, Route, Router} from 'react-router-dom';
 import {AppRoute} from '../../constants';
 import FilmPage from '../film-page/film-page';
 import HomePage from '../home-page/home-page';
@@ -10,6 +10,7 @@ import PlayerPage from '../player-page/player-page';
 import NotFoundPage from '../not-found-page/not-found-page';
 import {films} from '../../mocks/mocks';
 import PrivateRoute from '../private-route/private-route';
+import browserHistory from '../../browser-history';
 
 const App = () => {
   const {
@@ -22,7 +23,7 @@ const App = () => {
   } = AppRoute;
 
   return (
-    <Router>
+    <Router history={browserHistory}>
       <Switch>
         <Route path={ROOT} exact>
           <HomePage />
