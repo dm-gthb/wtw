@@ -7,7 +7,7 @@ import Spinner from '../spinner/spinner';
 import {
   selectFilmsByGenre,
   selectGenres,
-  selectLoadingStatus,
+  selectFilmsListLoadingStatus,
 } from '../../store/films-data-slice/films-data-slice';
 import {
   increaseCardsCount,
@@ -21,7 +21,7 @@ const Catalog = () => {
   const genres = useSelector(selectGenres);
   const films = useSelector(selectFilmsByGenre);
   const currentCardsCount = useSelector(selectCardsCount);
-  const loadingStatus = useSelector(selectLoadingStatus);
+  const loadingStatus = useSelector(selectFilmsListLoadingStatus);
   const filmCardsToRender = films.slice(0, currentCardsCount);
 
   const handleTabClick = (genre) => {

@@ -7,18 +7,29 @@ import {
 } from '../../constants';
 import {selectGenreFilter} from '../films-filter-slice/films-filter-slice';
 
+const FETCH_FILMS_ACTION = `fetchFilms`;
+const FETCH_CURRENT_FILM_ACTION = `fetchCurrentFilm`;
+
 const initialState = {
   films: [],
-  status: LoadingStatus.IDLE,
+  filmsLoadingStatus: LoadingStatus.IDLE,
+  currentFilm: null,
+  currentFilmLoadingStatus: LoadingStatus.IDLE,
 };
 
-const FETCH_FILM_ACTION_NAME = `fetchFilms`;
-
 export const fetchFilms = createAsyncThunk(
-    `${SliceName.FILMS_DATA}/${FETCH_FILM_ACTION_NAME}`,
+    `${SliceName.FILMS_DATA}/${FETCH_FILMS_ACTION}`,
     async (_, {extra: api}) => {
       const films = await api.getFilms();
       return films;
+    }
+);
+
+export const fetchCurrentFilm = createAsyncThunk(
+    `${SliceName.FILMS_DATA}/${FETCH_CURRENT_FILM_ACTION}`,
+    async (id, {extra: api}) => {
+      const film = await api.getFilm(id);
+      return film;
     }
 );
 
@@ -29,15 +40,27 @@ const filmsDataSlice = createSlice({
     builder
       .addCase(fetchFilms.pending, (state) => {
         state.films = [];
-        state.status = LoadingStatus.LOADING;
+        state.filmsLoadingStatus = LoadingStatus.LOADING;
       })
       .addCase(fetchFilms.fulfilled, (state, action) => {
         state.films = action.payload;
-        state.status = LoadingStatus.SUCCEEDED;
+        state.filmsLoadingStatus = LoadingStatus.SUCCEEDED;
       })
       .addCase(fetchFilms.rejected, (state) => {
         state.films = [];
-        state.status = LoadingStatus.FAILED;
+        state.filmsLoadingStatus = LoadingStatus.FAILED;
+      })
+      .addCase(fetchCurrentFilm.pending, (state) => {
+        state.currentFilm = null;
+        state.currentFilmLoadingStatus = LoadingStatus.LOADING;
+      })
+      .addCase(fetchCurrentFilm.fulfilled, (state, action) => {
+        state.currentFilm = action.payload;
+        state.currentFilmLoadingStatus = LoadingStatus.SUCCEEDED;
+      })
+      .addCase(fetchCurrentFilm.rejected, (state) => {
+        state.currentFilm = null;
+        state.currentFilmLoadingStatus = LoadingStatus.FAILED;
       });
   }
 });
@@ -59,4 +82,6 @@ export const selectFilmsByGenre = createSelector(
     (films, genre) => genre === DEFAULT_GENRE_FILTER ? films : films.filter((film) => film.genre === genre)
 );
 
-export const selectLoadingStatus = (state) => state[SliceName.FILMS_DATA].status;
+export const selectFilmsListLoadingStatus = (state) => state[SliceName.FILMS_DATA].filmsLoadingStatus;
+export const selectCurrentFilmLoadingStatus = (state) => state[SliceName.FILMS_DATA].currentFilmLoadingStatus;
+export const selectCurrentFilm = (state) => state[SliceName.FILMS_DATA].currentFilm;

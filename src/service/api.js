@@ -43,6 +43,11 @@ class API {
     return rawFilmsData.map(this._transformFilmServerData);
   }
 
+  async getFilm(id) {
+    const rawFilmData = await this._load(`${APIRoute.FILMS}/${id}`);
+    return this._transformFilmServerData(rawFilmData);
+  }
+
   async checkAuth() {
     try {
       const userData = await this._load(APIRoute.LOGIN);
