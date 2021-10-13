@@ -11,6 +11,7 @@ import {
   selectCurrentFilmLoadingStatus
 } from '../../store/films-data-slice/films-data-slice';
 import {LoadingStatus} from '../../constants';
+import NotFoundPage from '../not-found-page/not-found-page';
 
 const FilmPage = () => {
   const {id} = useParams();
@@ -18,10 +19,15 @@ const FilmPage = () => {
   const loadingStatus = useSelector(selectCurrentFilmLoadingStatus);
   const currentFilm = useSelector(selectCurrentFilm);
   const isDataLoaded = loadingStatus === LoadingStatus.SUCCEEDED;
+  const isLoadingError = loadingStatus === LoadingStatus.FAILED;
 
   useEffect(() => {
     dispatch(fetchCurrentFilm(id));
   }, [id]);
+
+  if (isLoadingError) {
+    return <NotFoundPage />;
+  }
 
   if (!isDataLoaded) {
     return <Spinner />;
