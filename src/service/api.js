@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {AppRoute, AuthStatus, HttpCode} from '../constants';
+import {APIRoute, AuthStatus, HttpCode} from '../constants';
 
 const BACKEND_URL = ``;
 const REQUEST_TIMEOUT = 5000;
@@ -39,13 +39,13 @@ class API {
   }
 
   async getFilms() {
-    const rawFilmsData = await this._load(AppRoute.FILMS);
+    const rawFilmsData = await this._load(APIRoute.FILMS);
     return rawFilmsData.map(this._transformFilmServerData);
   }
 
   async checkAuth() {
     try {
-      await this._load(AppRoute.LOGIN);
+      await this._load(APIRoute.LOGIN);
       return AuthStatus.AUTH;
     } catch (err) {
       return AuthStatus.NO_AUTH;

@@ -1,14 +1,14 @@
 import React from 'react';
-import {useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {Link} from 'react-router-dom';
 import Logo from '../logo/logo';
-import selectAuthStatus from '../../store/user-slice/user-slice';
+import {selectAuthStatus} from '../../store/user-slice/user-slice';
 import {AuthStatus} from '../../constants';
 
 const PageHeader = ({isUserBlockShown = true, className, children}) => {
-  const authStatus = useDispatch(selectAuthStatus);
+  const authStatus = useSelector(selectAuthStatus);
   const renderUserBlock = (isAuthData) => {
     const userAvatar = (
       <div className="user-block__avatar">
