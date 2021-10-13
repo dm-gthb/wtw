@@ -4,15 +4,17 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {Link} from 'react-router-dom';
 import Logo from '../logo/logo';
-import {selectAuthStatus} from '../../store/user-slice/user-slice';
+import {selectAuthStatus, selectUserData} from '../../store/user-slice/user-slice';
 import {AuthStatus} from '../../constants';
 
 const PageHeader = ({isUserBlockShown = true, className, children}) => {
   const authStatus = useSelector(selectAuthStatus);
+  const userData = useSelector(selectUserData);
+
   const renderUserBlock = (isAuthData) => {
     const userAvatar = (
       <div className="user-block__avatar">
-        <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+        <img src={userData && userData.avatar} alt="User avatar" width="63" height="63" />
       </div>
     );
     const signInLink = <Link to="/login" className="user-block__link">Sign in</Link>;

@@ -41,6 +41,10 @@ export const HttpCode = {
   UNAUTHORIZED: 401,
 };
 
+export const HttpMethod = {
+  POST: `POST`,
+};
+
 export const APIRoute = {
   FILMS: `/films`,
   LOGIN: `/login`,

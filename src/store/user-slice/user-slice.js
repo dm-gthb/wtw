@@ -1,17 +1,32 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import {AuthStatus, LoadingStatus, SliceName} from '../../constants';
+import {AuthStatus, SliceName} from '../../constants';
+
+const CHECK_AUTH_STATUS_ACTION_NAME = `checkAuth`;
+const LOGIN_ACTION_NAME = `login`;
 
 const initialState = {
   auth: AuthStatus.NO_AUTH,
-  status: LoadingStatus.IDLE,
+  userData: null,
 };
 
-const CHECK_AUTH_STATUS_ACTION_NAME = `checkAuth`;
+const handleUserData = (userData) => ({
+  userData,
+  auth: userData ? AuthStatus.AUTH : AuthStatus.NO_AUTH
+});
 
 export const checkAuth = createAsyncThunk(
     `${SliceName.USER}/${CHECK_AUTH_STATUS_ACTION_NAME}`,
     async (_, {extra: api}) => {
-      return await api.checkAuth();
+      const userData = await api.checkAuth();
+      return handleUserData(userData);
+    }
+);
+
+export const login = createAsyncThunk(
+    `${SliceName.USER}/${LOGIN_ACTION_NAME}`,
+    async (data, {extra: api}) => {
+      const userData = await api.login(data);
+      return handleUserData(userData);
     }
 );
 
@@ -20,17 +35,13 @@ const userSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder
-      .addCase(checkAuth.pending, (state) => {
-        state.auth = AuthStatus.NO_AUTH;
-        state.status = LoadingStatus.LOADING;
-      })
       .addCase(checkAuth.fulfilled, (state, action) => {
-        state.auth = action.payload;
-        state.status = LoadingStatus.SUCCEEDED;
+        state.userData = action.payload.userData;
+        state.auth = action.payload.auth;
       })
-      .addCase(checkAuth.rejected, (state) => {
-        state.auth = AuthStatus.NO_AUTH;
-        state.status = LoadingStatus.FAILED;
+      .addCase(login.fulfilled, (state, action) => {
+        state.userData = action.payload.userData;
+        state.auth = action.payload.auth;
       });
   }
 });
@@ -38,3 +49,4 @@ const userSlice = createSlice({
 export default userSlice.reducer;
 
 export const selectAuthStatus = (state) => state[SliceName.USER].auth;
+export const selectUserData = (state) => state[SliceName.USER].userData;

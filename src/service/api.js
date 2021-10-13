@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {APIRoute, AuthStatus, HttpCode} from '../constants';
+import {APIRoute, HttpCode, HttpMethod} from '../constants';
 
 const BACKEND_URL = ``;
 const REQUEST_TIMEOUT = 5000;
@@ -45,10 +45,22 @@ class API {
 
   async checkAuth() {
     try {
-      await this._load(APIRoute.LOGIN);
-      return AuthStatus.AUTH;
+      const userData = await this._load(APIRoute.LOGIN);
+      return this._transformUserServerData(userData);
     } catch (err) {
-      return AuthStatus.NO_AUTH;
+      return null;
+    }
+  }
+
+  async login(data) {
+    try {
+      const userData = await this._load(APIRoute.LOGIN, {
+        method: HttpMethod.POST,
+        data
+      });
+      return this._transformUserServerData(userData);
+    } catch (err) {
+      return null;
     }
   }
 
@@ -68,6 +80,15 @@ class API {
       genre: film.genre,
       released: film.released,
       previewVideoLink: film.preview_video_link,
+    };
+  }
+
+  _transformUserServerData(user) {
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      avatar: user.avatar_url
     };
   }
 }

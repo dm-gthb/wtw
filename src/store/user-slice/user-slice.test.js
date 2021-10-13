@@ -1,30 +1,49 @@
-import {AuthStatus, LoadingStatus} from '../../constants';
-import reducer, {checkAuth} from './user-slice';
+import {AuthStatus} from '../../constants';
+import reducer, {checkAuth, login} from './user-slice';
 
 describe(`Reducer works correctly`, () => {
   const initialState = {
     auth: AuthStatus.NO_AUTH,
-    status: LoadingStatus.IDLE,
+    userData: null,
   };
 
-  it(`should handle loading auth status`, () => {
-    expect(reducer(initialState, checkAuth.pending())).toEqual({
-      auth: AuthStatus.NO_AUTH,
-      status: LoadingStatus.LOADING,
-    });
-  });
-
-  it(`should handle derived auth status`, () => {
-    expect(reducer(initialState, checkAuth.fulfilled(AuthStatus.AUTH))).toEqual({
+  it(`should handle checking authorized`, () => {
+    expect(reducer(initialState, checkAuth.fulfilled({
+      userData: {id: 0, name: `Test`},
+      auth: AuthStatus.AUTH
+    }))).toEqual({
+      userData: {id: 0, name: `Test`},
       auth: AuthStatus.AUTH,
-      status: LoadingStatus.SUCCEEDED,
     });
   });
 
-  it(`should handle auth status`, () => {
-    expect(reducer(initialState, checkAuth.rejected())).toEqual({
-      auth: AuthStatus.NO_AUTH,
-      status: LoadingStatus.FAILED,
+  it(`should handle checking unauthorized`, () => {
+    expect(reducer(initialState, checkAuth.fulfilled({
+      userData: null,
+      auth: AuthStatus.NO_AUTH
+    }))).toEqual({
+      userData: null,
+      auth: AuthStatus.NO_AUTH
+    });
+  });
+
+  it(`should handle success login`, () => {
+    expect(reducer(initialState, login.fulfilled({
+      userData: {id: 0, name: `Test`},
+      auth: AuthStatus.AUTH
+    }))).toEqual({
+      userData: {id: 0, name: `Test`},
+      auth: AuthStatus.AUTH
+    });
+  });
+
+  it(`should handle failed login`, () => {
+    expect(reducer(initialState, login.fulfilled({
+      userData: null,
+      auth: AuthStatus.NO_AUTH
+    }))).toEqual({
+      userData: null,
+      auth: AuthStatus.NO_AUTH
     });
   });
 });
