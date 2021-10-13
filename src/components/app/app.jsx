@@ -9,6 +9,7 @@ import ReviewPage from '../review-page/review-page';
 import PlayerPage from '../player-page/player-page';
 import NotFoundPage from '../not-found-page/not-found-page';
 import {films} from '../../mocks/mocks';
+import PrivateRoute from '../private-route/private-route';
 
 const App = () => {
   const {
@@ -26,18 +27,28 @@ const App = () => {
         <Route path={ROOT} exact>
           <HomePage />
         </Route>
-        <Route path={LOGIN} exact component={LoginPage} />
-        <Route path={MY_LIST} exact>
-          <MyFilmsPage films={films} />
+        <Route path={LOGIN} exact>
+          <LoginPage />
         </Route>
+        <PrivateRoute
+          path={MY_LIST}
+          exact
+          render={() => <MyFilmsPage films={films} />}
+        />
         <Route path={`${FILMS}/:id`} exact>
           <FilmPage film={films[0]} />
         </Route>
-        <Route path={`${FILMS}/:id${REVIEW}`}>
-          <ReviewPage film={films[0]} />
+        <PrivateRoute
+          path={`${FILMS}/:id${REVIEW}`}
+          exact
+          render={() => <ReviewPage film={films[0]} />}
+        />
+        <Route path={`${PLAYER}/:id/`} exact>
+          <PlayerPage />
         </Route>
-        <Route path={`${PLAYER}/:id/`} exact component={PlayerPage} />
-        <Route component={NotFoundPage} />
+        <Route>
+          <NotFoundPage />
+        </Route>
       </Switch>
     </Router>
   );
