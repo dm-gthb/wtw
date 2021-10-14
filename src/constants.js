@@ -35,6 +35,7 @@ export const SliceName = {
   FILMS_DATA: `FILMS_DATA`,
   FILMS_FILTER: `FILMS_FILTER`,
   USER: `USER`,
+  REVIEWS: `REVIEWS`,
 };
 
 export const HttpCode = {
@@ -48,6 +49,7 @@ export const HttpMethod = {
 export const APIRoute = {
   FILMS: `/films`,
   LOGIN: `/login`,
+  REVIEWS: `/comments`,
 };
 
 export const MAX_RATING = 10;

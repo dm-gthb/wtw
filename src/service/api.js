@@ -69,6 +69,15 @@ class API {
     }
   }
 
+  async getFilmReviews(filmId) {
+    try {
+      const reviews = await this._load(`${APIRoute.REVIEWS}/${filmId}`);
+      return reviews;
+    } catch (err) {
+      throw err;
+    }
+  }
+
   _transformFilmServerData(film) {
     return {
       id: film.id,

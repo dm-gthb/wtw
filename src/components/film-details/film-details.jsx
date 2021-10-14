@@ -16,7 +16,7 @@ const FilmDetails = ({film}) => {
       case FilmDetailsSection.DETAILS:
         return <FilmMetaInfo film={film} />;
       case FilmDetailsSection.REVIEWS:
-        return <Reviews />;
+        return <Reviews filmId={film.id} />;
       default:
         return null;
     }
