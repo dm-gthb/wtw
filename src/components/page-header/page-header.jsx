@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import {Link} from 'react-router-dom';
 import Logo from '../logo/logo';
 import {selectAuthStatus, selectUserData} from '../../store/user/user';
-import {AuthStatus} from '../../constants';
+import {AppRoute, AuthStatus} from '../../constants';
 
 const PageHeader = ({isUserBlockShown = true, className, children}) => {
   const authStatus = useSelector(selectAuthStatus);
@@ -14,7 +14,9 @@ const PageHeader = ({isUserBlockShown = true, className, children}) => {
   const renderUserBlock = (isAuthData) => {
     const userAvatar = (
       <div className="user-block__avatar">
-        <img src={userData && userData.avatar} alt="User avatar" width="63" height="63" />
+        <Link to={AppRoute.MY_LIST}>
+          <img src={userData && userData.avatar} alt="User avatar" width="63" height="63" />
+        </Link>
       </div>
     );
     const signInLink = <Link to="/login" className="user-block__link">Sign in</Link>;
