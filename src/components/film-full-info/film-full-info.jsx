@@ -4,13 +4,15 @@ import PageHeader from '../page-header/page-header';
 import FilmHeadInfo from '../film-head-info/film-head-info';
 import Poster from '../poster/poster';
 import FilmDetails from '../film-details/film-details';
-import {AuthStatus, PosterSize} from '../../constants';
+import {AppRoute, AuthStatus, PosterSize} from '../../constants';
 import {useSelector} from 'react-redux';
 import {selectAuthStatus} from '../../store/user/user';
+import {Link, useRouteMatch} from 'react-router-dom';
 
 const FilmFullInfo = ({film}) => {
   const {name, posterImage, backgroundImage} = film;
   const authStatus = useSelector(selectAuthStatus);
+  const routeMatch = useRouteMatch();
   const actionButtons = (
     <>
       <button className="btn btn--play movie-card__button" type="button">
@@ -27,9 +29,9 @@ const FilmFullInfo = ({film}) => {
       </button>
       {
         authStatus === AuthStatus.AUTH &&
-        <button className="btn movie-card__button">
+        <Link to={`${routeMatch.url}${AppRoute.REVIEW}`} className="btn movie-card__button">
           Add review
-        </button>
+        </Link>
       }
     </>
   );

@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
-import {useSelector} from 'react-redux';
-import {useDispatch} from 'react-redux';
-import {useParams} from 'react-router';
+import {useSelector, useDispatch} from 'react-redux';
+import {useParams} from 'react-router-dom';
 import FilmsList from '../films-list/films-list';
 import FilmFullInfo from '../film-full-info/film-full-info';
 import Spinner from '../spinner/spinner';

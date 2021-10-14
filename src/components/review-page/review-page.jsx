@@ -1,11 +1,13 @@
 import React from 'react';
 import {PosterSize} from '../../constants';
-import filmProp from '../../prop-types/film.prop';
 import PageHeader from '../page-header/page-header';
 import Poster from '../poster/poster';
 import ReviewForm from '../review-form/review-form';
+import {useSelector} from 'react-redux';
+import {selectCurrentFilm} from '../../store/films-data/films-data';
 
-const ReviewPage = ({film}) => {
+const ReviewPage = () => {
+  const film = useSelector(selectCurrentFilm);
   const {name, posterImage, backgroundImage} = film;
   return (
     <section className="movie-card movie-card--full">
@@ -21,16 +23,11 @@ const ReviewPage = ({film}) => {
           image={posterImage}
         />
       </div>
-
       <div className="add-review">
-        <ReviewForm />
+        <ReviewForm filmId={film.id} />
       </div>
     </section>
   );
-};
-
-ReviewPage.propTypes = {
-  film: filmProp.isRequired
 };
 
 export default ReviewPage;

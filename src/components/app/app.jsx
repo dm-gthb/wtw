@@ -42,7 +42,7 @@ const App = () => {
         <PrivateRoute
           path={`${FILMS}/:id${REVIEW}`}
           exact
-          render={() => <ReviewPage film={films[0]} />}
+          render={() => <ReviewPage />}
         />
         <Route path={`${PLAYER}/:id/`} exact>
           <PlayerPage />

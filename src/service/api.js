@@ -78,6 +78,18 @@ class API {
     }
   }
 
+  async postReview({filmId, formData}) {
+    try {
+      const postedReview = await this._load(`${APIRoute.REVIEWS}/${filmId}`, {
+        method: HttpMethod.POST,
+        data: formData
+      });
+      return postedReview;
+    } catch (err) {
+      throw err;
+    }
+  }
+
   _transformFilmServerData(film) {
     return {
       id: film.id,
