@@ -9,7 +9,7 @@ import {
   fetchCurrentFilm,
   selectCurrentFilm,
   selectCurrentFilmLoadingStatus
-} from '../../store/films-data-slice/films-data-slice';
+} from '../../store/films-data/films-data';
 import {LoadingStatus} from '../../constants';
 import NotFoundPage from '../not-found-page/not-found-page';
 

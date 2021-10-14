@@ -5,7 +5,7 @@ import {
   LoadingStatus,
   SliceName
 } from '../../constants';
-import {selectGenreFilter} from '../films-filter-slice/films-filter-slice';
+import {selectGenreFilter} from '../films-filter/films-filter';
 
 const FETCH_FILMS_ACTION = `fetchFilms`;
 const FETCH_CURRENT_FILM_ACTION = `fetchCurrentFilm`;

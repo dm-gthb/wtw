@@ -1,7 +1,7 @@
 import {configureStore} from '@reduxjs/toolkit';
-import filmsDataReducer from './films-data-slice/films-data-slice';
-import filmsFilterReducer from './films-filter-slice/films-filter-slice';
-import userReducer, {checkAuth} from './user-slice/user-slice';
+import filmsDataReducer from './films-data/films-data';
+import filmsFilterReducer from './films-filter/films-filter';
+import userReducer, {checkAuth} from './user/user';
 import {AuthStatus, SliceName} from '../constants';
 import {createAPI} from '../service/api';
 

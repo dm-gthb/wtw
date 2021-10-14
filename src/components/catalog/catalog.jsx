@@ -8,13 +8,13 @@ import {
   selectFilmsByGenre,
   selectGenres,
   selectFilmsListLoadingStatus,
-} from '../../store/films-data-slice/films-data-slice';
+} from '../../store/films-data/films-data';
 import {
   increaseCardsCount,
   resetCardsCount,
   selectCardsCount,
   setGenreFilter
-} from '../../store/films-filter-slice/films-filter-slice';
+} from '../../store/films-filter/films-filter';
 
 const Catalog = () => {
   const dispatch = useDispatch();

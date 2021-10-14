@@ -1,5 +1,5 @@
 import {LoadingStatus} from '../../constants';
-import reducer, {fetchCurrentFilm, fetchFilms} from './films-data-slice';
+import reducer, {fetchCurrentFilm, fetchFilms} from './films-data';
 
 describe(`Reducer works correctly`, () => {
   const initialState = {

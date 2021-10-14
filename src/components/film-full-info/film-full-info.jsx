@@ -6,7 +6,7 @@ import Poster from '../poster/poster';
 import FilmDetails from '../film-details/film-details';
 import {AuthStatus, PosterSize} from '../../constants';
 import {useSelector} from 'react-redux';
-import {selectAuthStatus} from '../../store/user-slice/user-slice';
+import {selectAuthStatus} from '../../store/user/user';
 
 const FilmFullInfo = ({film}) => {
   const {name, posterImage, backgroundImage} = film;

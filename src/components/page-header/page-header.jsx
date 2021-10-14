@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {Link} from 'react-router-dom';
 import Logo from '../logo/logo';
-import {selectAuthStatus, selectUserData} from '../../store/user-slice/user-slice';
+import {selectAuthStatus, selectUserData} from '../../store/user/user';
 import {AuthStatus} from '../../constants';
 
 const PageHeader = ({isUserBlockShown = true, className, children}) => {

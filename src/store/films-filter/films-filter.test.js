@@ -2,7 +2,7 @@ import reducer, {
   increaseCardsCount,
   resetCardsCount,
   setGenreFilter
-} from './films-filter-slice';
+} from './films-filter';
 
 describe(`Reducer works correctly`, () => {
   const initialState = {

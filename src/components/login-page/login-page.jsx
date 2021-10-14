@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
 import {useDispatch} from 'react-redux';
-import {login} from '../../store/user-slice/user-slice';
+import {login} from '../../store/user/user';
 import PageFooter from '../page-footer/page-footer';
 import PageHeader from '../page-header/page-header';
 

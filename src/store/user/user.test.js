@@ -1,5 +1,5 @@
 import {AuthStatus} from '../../constants';
-import reducer, {checkAuth, login} from './user-slice';
+import reducer, {checkAuth, login} from './user';
 
 describe(`Reducer works correctly`, () => {
   const initialState = {
