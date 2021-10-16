@@ -6,6 +6,7 @@ import filmProp from '../../prop-types/film.prop';
 import {AppRoute} from '../../constants';
 import VideoPlayer from '../video-player/video-player';
 import videoStyles from './video-styles';
+import browserHistory from '../../browser-history';
 
 const PreviewCard = ({className, film, isVideoPlaying, onPlayVideo, onStopVideo}) => {
   const {id, name, previewImage, previewVideoLink} = film;
@@ -45,6 +46,7 @@ const PreviewCard = ({className, film, isVideoPlaying, onPlayVideo, onStopVideo}
       className={classNames(`small-movie-card`, className)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={() => browserHistory.push(`${AppRoute.FILMS}/${id}`)}
     >
       {renderContent()}
     </article>
@@ -59,4 +61,6 @@ PreviewCard.propTypes = {
   onStopVideo: PropTypes.func.isRequired,
 };
 
-export default PreviewCard;
+export default React.memo(PreviewCard, (prevProps, nextProps) => {
+  return prevProps.isVideoPlaying === nextProps.isVideoPlaying;
+});
