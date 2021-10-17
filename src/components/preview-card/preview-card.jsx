@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 import filmProp from '../../prop-types/film.prop';
 import {AppRoute} from '../../constants';
-import VideoPlayer from '../video-player/video-player';
+import BaseVideoPlayer from '../base-video-player/base-video-player';
 import videoStyles from './video-styles';
 import browserHistory from '../../browser-history';
 
@@ -16,9 +16,11 @@ const PreviewCard = ({className, film, isVideoPlaying, onPlayVideo, onStopVideo}
   const renderContent = () => {
     if (isVideoPlaying) {
       return (
-        <VideoPlayer
+        <BaseVideoPlayer
           src={previewVideoLink}
           poster={previewImage}
+          isPlaying={true}
+          isMuted={true}
           styles={videoStyles}
         />
       );

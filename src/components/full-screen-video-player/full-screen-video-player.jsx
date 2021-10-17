@@ -1,8 +1,9 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import filmProp from '../../prop-types/film.prop';
 import {AppRoute, KeyboardKey} from '../../constants';
 import browserHistory from '../../browser-history';
 import VideoPlayerControls from '../video-player-controls/video-player-controls';
+import BaseVideoPlayer from '../base-video-player/base-video-player';
 
 const FullScreenVideoPlayer = ({film}) => {
   const {
@@ -12,10 +13,10 @@ const FullScreenVideoPlayer = ({film}) => {
     name,
   } = film;
 
-  const videoRef = useRef();
   const [isLoading, setIsLoading] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [isVideoEnded, setIsVideoEnded] = useState(false);
+  const [videoRef, setVideoRef] = useState();
 
   const tryExitFullScreen = () => {
     if (document.fullscreenElement && document.exitFullscreen) {
@@ -46,25 +47,10 @@ const FullScreenVideoPlayer = ({film}) => {
     setIsVideoEnded(true);
   };
 
-  useEffect(() => {
-    videoRef.current.oncanplaythrough = () => {
-      setIsLoading(false);
-    };
-    return () => {
-      videoRef.current.oncanplaythrough = null;
-      videoRef.current.onplay = null;
-      videoRef.current.onpause = null;
-      videoRef.current = null;
-    };
-  }, [previewVideoLink]);
-
-  useEffect(() => {
-    if (isPlaying) {
-      videoRef.current.play();
-    } else {
-      videoRef.current.pause();
-    }
-  }, [isPlaying]);
+  const handleVideoLoad = (elementRef) => {
+    setVideoRef(elementRef);
+    setIsLoading(false);
+  };
 
   useEffect(() => {
     window.addEventListener(`keydown`, handleKeyDown);
@@ -75,13 +61,13 @@ const FullScreenVideoPlayer = ({film}) => {
 
   return (
     <div className="player">
-      <video
+      <BaseVideoPlayer
         src={previewVideoLink}
-        className="player__video"
         poster={previewImage}
-        ref={videoRef}
-        muted={true}
+        isPlaying={isPlaying}
         onEnded={handleVideoEnd}
+        onLoad={handleVideoLoad}
+        className="player__video"
       />
       <button
         type="button"
