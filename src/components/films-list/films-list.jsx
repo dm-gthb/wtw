@@ -22,6 +22,14 @@ const FilmsList = ({films}) => {
 
   useEffect(() => () => clearTimeout(playTimeout), [playTimeout]);
 
+  if (!films.length) {
+    return (
+      <div className="user-page__content">
+        <h3 style={{textAlign: `center`}}>No films yet</h3>
+      </div>
+    );
+  }
+
   return (
     <div className="catalog__movies-list">
       {films.map((film) => {

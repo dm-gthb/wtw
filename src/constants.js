@@ -51,6 +51,7 @@ export const APIRoute = {
   LOGIN: `/login`,
   REVIEWS: `/comments`,
   PROMO: `/promo`,
+  FAVOFITE: `/favorite`,
 };
 
 export const ReviewCommentLength = {

@@ -53,6 +53,11 @@ class API {
     return this._transformFilmServerData(rawFilmData);
   }
 
+  async getFavoritesFilms() {
+    const rawFilmsData = await this._load(APIRoute.FAVOFITE);
+    return rawFilmsData.map(this._transformFilmServerData);
+  }
+
   async checkAuth() {
     try {
       const userData = await this._load(APIRoute.LOGIN);

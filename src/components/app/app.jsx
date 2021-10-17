@@ -8,7 +8,6 @@ import MyFilmsPage from '../my-films-page/my-films-page';
 import ReviewPage from '../review-page/review-page';
 import PlayerPage from '../player-page/player-page';
 import NotFoundPage from '../not-found-page/not-found-page';
-import {films} from '../../mocks/mocks';
 import PrivateRoute from '../private-route/private-route';
 import browserHistory from '../../browser-history';
 
@@ -34,7 +33,7 @@ const App = () => {
         <PrivateRoute
           path={MY_LIST}
           exact
-          render={() => <MyFilmsPage films={films} />}
+          render={() => <MyFilmsPage />}
         />
         <Route path={`${FILMS}/:id`} exact>
           <FilmPage />

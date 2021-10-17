@@ -1,5 +1,5 @@
 import {LoadingStatus} from '../../constants';
-import reducer, {fetchCurrentFilm, fetchFilms, fetchPromoFilm} from './films-data';
+import reducer, {fetchCurrentFilm, fetchFavoritesFilms, fetchFilms, fetchPromoFilm} from './films-data';
 
 describe(`Reducer works correctly`, () => {
   const initialState = {
@@ -14,6 +14,17 @@ describe(`Reducer works correctly`, () => {
       },
     ],
     filmsLoadingStatus: LoadingStatus.IDLE,
+    favoriteFilms: [
+      {
+        id: 1,
+        title: `Film 1`,
+      },
+      {
+        id: 2,
+        title: `Film 2`,
+      },
+    ],
+    favoriteFilmsLoadingStatus: LoadingStatus.IDLE,
     currentFilm: null,
     currentFilmLoadingStatus: LoadingStatus.IDLE,
     promoFilm: null,
@@ -52,6 +63,40 @@ describe(`Reducer works correctly`, () => {
       });
     });
   });
+
+  describe(`Favorite films fetching works correctly`, () => {
+    it(`should handle requesting films`, () => {
+      expect(reducer(initialState, fetchFavoritesFilms.pending())).toEqual({
+        ...initialState,
+        favoriteFilms: [],
+        favoriteFilmsLoadingStatus: LoadingStatus.LOADING,
+      });
+    });
+
+    it(`should handle loading favoriteFilms`, () => {
+      const loadedFilms = [
+        {
+          id: 100,
+          title: `Loaded Film Title`
+        }
+      ];
+
+      expect(reducer(initialState, fetchFavoritesFilms.fulfilled(loadedFilms))).toEqual({
+        ...initialState,
+        favoriteFilms: loadedFilms,
+        favoriteFilmsLoadingStatus: LoadingStatus.SUCCEEDED,
+      });
+    });
+
+    it(`should handle loading error`, () => {
+      expect(reducer(initialState, fetchFavoritesFilms.rejected())).toEqual({
+        ...initialState,
+        favoriteFilms: [],
+        favoriteFilmsLoadingStatus: LoadingStatus.FAILED,
+      });
+    });
+  });
+
 
   describe(`Current film fetching works correctly`, () => {
     it(`should handle pending loading`, () => {

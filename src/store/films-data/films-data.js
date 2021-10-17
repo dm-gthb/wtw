@@ -10,10 +10,13 @@ import {selectGenreFilter} from '../films-filter/films-filter';
 const FETCH_FILMS_ACTION = `fetchFilms`;
 const FETCH_CURRENT_FILM_ACTION = `fetchCurrentFilm`;
 const FETCH_PROMO_FILM_ACTION = `fetchPromoFilm`;
+const FETCH_FAVORITES_FILMS_ACTION = `fetchFavoritesFilms`;
 
 const initialState = {
   films: [],
   filmsLoadingStatus: LoadingStatus.IDLE,
+  favoriteFilms: [],
+  favoriteFilmsLoadingStatus: LoadingStatus.IDLE,
   currentFilm: null,
   currentFilmLoadingStatus: LoadingStatus.IDLE,
   promoFilm: null,
@@ -44,6 +47,14 @@ export const fetchPromoFilm = createAsyncThunk(
     }
 );
 
+export const fetchFavoritesFilms = createAsyncThunk(
+    `${SliceName.FILMS_DATA}/${FETCH_FAVORITES_FILMS_ACTION}`,
+    async (_, {extra: api}) => {
+      const films = await api.getFavoritesFilms();
+      return films;
+    }
+);
+
 const filmsDataSlice = createSlice({
   name: SliceName.FILMS_DATA,
   initialState,
@@ -60,6 +71,18 @@ const filmsDataSlice = createSlice({
       .addCase(fetchFilms.rejected, (state) => {
         state.films = [];
         state.filmsLoadingStatus = LoadingStatus.FAILED;
+      })
+      .addCase(fetchFavoritesFilms.pending, (state) => {
+        state.favoriteFilms = [];
+        state.favoriteFilmsLoadingStatus = LoadingStatus.LOADING;
+      })
+      .addCase(fetchFavoritesFilms.fulfilled, (state, action) => {
+        state.favoriteFilms = action.payload;
+        state.favoriteFilmsLoadingStatus = LoadingStatus.SUCCEEDED;
+      })
+      .addCase(fetchFavoritesFilms.rejected, (state) => {
+        state.favoriteFilms = [];
+        state.favoriteFilmsLoadingStatus = LoadingStatus.FAILED;
       })
       .addCase(fetchCurrentFilm.pending, (state) => {
         state.currentFilm = null;
@@ -90,9 +113,7 @@ const filmsDataSlice = createSlice({
 
 export default filmsDataSlice.reducer;
 
-export const selectFilms = (state) => {
-  return state[SliceName.FILMS_DATA].films;
-};
+export const selectFilms = (state) => state[SliceName.FILMS_DATA].films;
 
 export const selectGenres = createSelector(
     selectFilms,
@@ -106,6 +127,8 @@ export const selectFilmsByGenre = createSelector(
 );
 
 export const selectFilmsListLoadingStatus = (state) => state[SliceName.FILMS_DATA].filmsLoadingStatus;
+export const selectFavoriteFilms = (state) => state[SliceName.FILMS_DATA].favoriteFilms;
+export const selectFavoriteFilmsListLoadingStatus = (state) => state[SliceName.FILMS_DATA].favoriteFilmsLoadingStatus;
 export const selectCurrentFilmLoadingStatus = (state) => state[SliceName.FILMS_DATA].currentFilmLoadingStatus;
 export const selectCurrentFilm = (state) => state[SliceName.FILMS_DATA].currentFilm;
 export const selectPromoFilm = (state) => state[SliceName.FILMS_DATA].promoFilm;

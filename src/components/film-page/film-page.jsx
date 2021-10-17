@@ -10,7 +10,7 @@ import {
   selectCurrentFilmLoadingStatus
 } from '../../store/films-data/films-data';
 import {LoadingStatus} from '../../constants';
-import ErrorPage from '../error-page/error-page';
+import LoadingErrorPage from '../loading-error-page/loading-error-page';
 
 const FilmPage = () => {
   const {id} = useParams();
@@ -25,11 +25,7 @@ const FilmPage = () => {
   }, [id]);
 
   if (isLoadingError) {
-    return (
-      <ErrorPage>
-        <h1 style={{textAlign: `center`}}>Loading error, please try again.</h1>
-      </ErrorPage>
-    );
+    return <LoadingErrorPage />;
   }
 
   if (!isDataLoaded) {

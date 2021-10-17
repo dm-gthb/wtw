@@ -6,8 +6,8 @@ import {selectFilmById, selectFilmsListLoadingStatus} from '../../store/films-da
 import {LoadingStatus} from '../../constants';
 import Spinner from '../spinner/spinner';
 import NotFoundPage from '../not-found-page/not-found-page';
-import ErrorPage from '../error-page/error-page';
 import FullPlayer from '../full-screen-video-player/full-screen-video-player';
+import LoadingErrorPage from '../loading-error-page/loading-error-page';
 
 const PlayerPage = () => {
   const {id} = useParams();
@@ -26,13 +26,7 @@ const PlayerPage = () => {
   }
 
   if (isLoadingError) {
-    return (
-      <ErrorPage>
-        <h1 style={{textAlign: `center`}}>
-          Loading error, please try again.
-        </h1>
-      </ErrorPage>
-    );
+    return <LoadingErrorPage />;
   }
 
   if (!isDataLoaded) {

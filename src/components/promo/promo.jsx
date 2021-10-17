@@ -6,8 +6,8 @@ import browserHistory from '../../browser-history';
 import {AppRoute, LoadingStatus} from '../../constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchPromoFilm, selectPromoFilm, selectPromoFilmLoadingStatus} from '../../store/films-data/films-data';
-import ErrorPage from '../error-page/error-page';
 import Spinner from '../spinner/spinner';
+import LoadingErrorPage from '../loading-error-page/loading-error-page';
 
 const Promo = () => {
   const dispatch = useDispatch();
@@ -22,15 +22,18 @@ const Promo = () => {
   }, []);
 
   if (isLoadingError) {
-    return (
-      <ErrorPage>
-        <h1 style={{textAlign: `center`}}>Loading error, please try again.</h1>
-      </ErrorPage>
-    );
+    return <LoadingErrorPage />;
   }
 
   if (!isDataLoaded) {
-    return <Spinner />;
+    return (
+      <section className="movie-card">
+        <div className="movie-card__bg" />
+        <h1 className="visually-hidden">WTW</h1>
+        <PageHeader className="movie-card__head" />
+        <Spinner />
+      </section>
+    );
   }
 
   const actionButtons = (<>
