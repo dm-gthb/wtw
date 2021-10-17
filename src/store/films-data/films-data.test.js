@@ -1,5 +1,5 @@
 import {LoadingStatus} from '../../constants';
-import reducer, {fetchCurrentFilm, fetchFilms} from './films-data';
+import reducer, {fetchCurrentFilm, fetchFilms, fetchPromoFilm} from './films-data';
 
 describe(`Reducer works correctly`, () => {
   const initialState = {
@@ -16,6 +16,8 @@ describe(`Reducer works correctly`, () => {
     filmsLoadingStatus: LoadingStatus.IDLE,
     currentFilm: null,
     currentFilmLoadingStatus: LoadingStatus.IDLE,
+    promoFilm: null,
+    promoFilmLoadingStatus: LoadingStatus.IDLE,
   };
 
   describe(`Films list fetching works correctly`, () => {
@@ -73,6 +75,32 @@ describe(`Reducer works correctly`, () => {
         ...initialState,
         currentFilm: null,
         currentFilmLoadingStatus: LoadingStatus.FAILED
+      });
+    });
+  });
+
+  describe(`Promo film fetching works correctly`, () => {
+    it(`should handle pending loading`, () => {
+      expect(reducer(initialState, fetchPromoFilm.pending())).toEqual({
+        ...initialState,
+        promoFilm: null,
+        promoFilmLoadingStatus: LoadingStatus.LOADING
+      });
+    });
+
+    it(`should handle finished film load`, () => {
+      expect(reducer(initialState, fetchPromoFilm.fulfilled({id: 1, title: `Test Current Film`}))).toEqual({
+        ...initialState,
+        promoFilm: {id: 1, title: `Test Current Film`},
+        promoFilmLoadingStatus: LoadingStatus.SUCCEEDED
+      });
+    });
+
+    it(`should handle failed load`, () => {
+      expect(reducer(initialState, fetchPromoFilm.rejected())).toEqual({
+        ...initialState,
+        promoFilm: null,
+        promoFilmLoadingStatus: LoadingStatus.FAILED
       });
     });
   });

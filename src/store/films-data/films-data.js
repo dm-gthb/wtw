@@ -9,12 +9,15 @@ import {selectGenreFilter} from '../films-filter/films-filter';
 
 const FETCH_FILMS_ACTION = `fetchFilms`;
 const FETCH_CURRENT_FILM_ACTION = `fetchCurrentFilm`;
+const FETCH_PROMO_FILM_ACTION = `fetchPromoFilm`;
 
 const initialState = {
   films: [],
   filmsLoadingStatus: LoadingStatus.IDLE,
   currentFilm: null,
   currentFilmLoadingStatus: LoadingStatus.IDLE,
+  promoFilm: null,
+  promoFilmLoadingStatus: LoadingStatus.IDLE,
 };
 
 export const fetchFilms = createAsyncThunk(
@@ -29,6 +32,14 @@ export const fetchCurrentFilm = createAsyncThunk(
     `${SliceName.FILMS_DATA}/${FETCH_CURRENT_FILM_ACTION}`,
     async (id, {extra: api}) => {
       const film = await api.getFilm(id);
+      return film;
+    }
+);
+
+export const fetchPromoFilm = createAsyncThunk(
+    `${SliceName.FILMS_DATA}/${FETCH_PROMO_FILM_ACTION}`,
+    async (_, {extra: api}) => {
+      const film = await api.getPromoFilm();
       return film;
     }
 );
@@ -61,6 +72,18 @@ const filmsDataSlice = createSlice({
       .addCase(fetchCurrentFilm.rejected, (state) => {
         state.currentFilm = null;
         state.currentFilmLoadingStatus = LoadingStatus.FAILED;
+      })
+      .addCase(fetchPromoFilm.pending, (state) => {
+        state.promoFilm = null;
+        state.promoFilmLoadingStatus = LoadingStatus.LOADING;
+      })
+      .addCase(fetchPromoFilm.fulfilled, (state, action) => {
+        state.promoFilm = action.payload;
+        state.promoFilmLoadingStatus = LoadingStatus.SUCCEEDED;
+      })
+      .addCase(fetchPromoFilm.rejected, (state) => {
+        state.promoFilm = null;
+        state.promoFilmLoadingStatus = LoadingStatus.FAILED;
       });
   }
 });
@@ -85,4 +108,6 @@ export const selectFilmsByGenre = createSelector(
 export const selectFilmsListLoadingStatus = (state) => state[SliceName.FILMS_DATA].filmsLoadingStatus;
 export const selectCurrentFilmLoadingStatus = (state) => state[SliceName.FILMS_DATA].currentFilmLoadingStatus;
 export const selectCurrentFilm = (state) => state[SliceName.FILMS_DATA].currentFilm;
+export const selectPromoFilm = (state) => state[SliceName.FILMS_DATA].promoFilm;
+export const selectPromoFilmLoadingStatus = (state) => state[SliceName.FILMS_DATA].promoFilmLoadingStatus;
 export const selectFilmById = (state, filmId) => state[SliceName.FILMS_DATA].films.find((film) => film.id === filmId);

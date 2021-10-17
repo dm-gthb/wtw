@@ -1,13 +1,44 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, {useEffect} from 'react';
 import FilmHeadInfo from '../film-head-info/film-head-info';
 import PageHeader from '../page-header/page-header';
 import Poster from '../poster/poster';
+import browserHistory from '../../browser-history';
+import {AppRoute, LoadingStatus} from '../../constants';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchPromoFilm, selectPromoFilm, selectPromoFilmLoadingStatus} from '../../store/films-data/films-data';
+import ErrorPage from '../error-page/error-page';
+import Spinner from '../spinner/spinner';
 
-const Promo = ({film}) => {
-  const {name, posterImage, backgroundImage} = film;
+const Promo = () => {
+  const dispatch = useDispatch();
+  const loadingStatus = useSelector(selectPromoFilmLoadingStatus);
+  const film = useSelector(selectPromoFilm);
+  const isDataLoaded = loadingStatus === LoadingStatus.SUCCEEDED;
+  const isLoadingError = loadingStatus === LoadingStatus.FAILED;
+  const handlePlayButtonClick = () => browserHistory.push(`${AppRoute.PLAYER}/${film.id}`);
+
+  useEffect(() => {
+    dispatch(fetchPromoFilm());
+  }, []);
+
+  if (isLoadingError) {
+    return (
+      <ErrorPage>
+        <h1 style={{textAlign: `center`}}>Loading error, please try again.</h1>
+      </ErrorPage>
+    );
+  }
+
+  if (!isDataLoaded) {
+    return <Spinner />;
+  }
+
   const actionButtons = (<>
-    <button className="btn btn--play movie-card__button" type="button">
+    <button
+      className="btn btn--play movie-card__button"
+      type="button"
+      onClick={handlePlayButtonClick}
+    >
       <svg viewBox="0 0 19 19" width="19" height="19">
         <use xlinkHref="#play-s"></use>
       </svg>
@@ -24,13 +55,13 @@ const Promo = ({film}) => {
   return (
     <section className="movie-card">
       <div className="movie-card__bg">
-        <img src={backgroundImage} alt={name} />
+        <img src={film.backgroundImage} alt={film.name} />
       </div>
       <h1 className="visually-hidden">WTW</h1>
       <PageHeader className="movie-card__head" />
       <div className="movie-card__wrap">
         <div className="movie-card__info">
-          <Poster title={name} image={posterImage} />
+          <Poster title={film.name} image={film.posterImage} />
           <FilmHeadInfo
             film={film}
             renderButtons={() => actionButtons}
@@ -39,10 +70,6 @@ const Promo = ({film}) => {
       </div>
     </section>
   );
-};
-
-Promo.propTypes = {
-  film: PropTypes.object.isRequired
 };
 
 export default Promo;

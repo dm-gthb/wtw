@@ -50,6 +50,7 @@ export const APIRoute = {
   FILMS: `/films`,
   LOGIN: `/login`,
   REVIEWS: `/comments`,
+  PROMO: `/promo`,
 };
 
 export const ReviewCommentLength = {

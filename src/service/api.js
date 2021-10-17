@@ -48,6 +48,11 @@ class API {
     return this._transformFilmServerData(rawFilmData);
   }
 
+  async getPromoFilm() {
+    const rawFilmData = await this._load(`${APIRoute.FILMS}${APIRoute.PROMO}`);
+    return this._transformFilmServerData(rawFilmData);
+  }
+
   async checkAuth() {
     try {
       const userData = await this._load(APIRoute.LOGIN);
