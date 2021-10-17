@@ -85,3 +85,4 @@ export const selectFilmsByGenre = createSelector(
 export const selectFilmsListLoadingStatus = (state) => state[SliceName.FILMS_DATA].filmsLoadingStatus;
 export const selectCurrentFilmLoadingStatus = (state) => state[SliceName.FILMS_DATA].currentFilmLoadingStatus;
 export const selectCurrentFilm = (state) => state[SliceName.FILMS_DATA].currentFilm;
+export const selectFilmById = (state, filmId) => state[SliceName.FILMS_DATA].films.find((film) => film.id === filmId);

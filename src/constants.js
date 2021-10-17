@@ -57,6 +57,10 @@ export const ReviewCommentLength = {
   MAX: 400
 };
 
+export const KeyboardKey = {
+  ESCAPE: `Escape`,
+};
+
 export const MAX_RATING = 10;
 export const MAX_FILMS_CARDS_TO_RENDER_ONCE = 8;
 export const PREVIEW_VIDEO_PLAYING_TIMEOUT = 1000;

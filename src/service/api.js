@@ -106,6 +106,7 @@ class API {
       genre: film.genre,
       released: film.released,
       previewVideoLink: film.preview_video_link,
+      backgroundColor: film.background_color,
     };
   }
 

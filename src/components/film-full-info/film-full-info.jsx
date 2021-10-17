@@ -8,14 +8,20 @@ import {AppRoute, AuthStatus, PosterSize} from '../../constants';
 import {useSelector} from 'react-redux';
 import {selectAuthStatus} from '../../store/user/user';
 import {Link, useRouteMatch} from 'react-router-dom';
+import browserHistory from '../../browser-history';
 
 const FilmFullInfo = ({film}) => {
-  const {name, posterImage, backgroundImage} = film;
+  const {id, name, posterImage, backgroundImage, backgroundColor} = film;
   const authStatus = useSelector(selectAuthStatus);
   const routeMatch = useRouteMatch();
+  const handleButtonClick = () => browserHistory.push(`${AppRoute.PLAYER}/${id}`);
   const actionButtons = (
     <>
-      <button className="btn btn--play movie-card__button" type="button">
+      <button
+        className="btn btn--play movie-card__button"
+        type="button"
+        onClick={handleButtonClick}
+      >
         <svg viewBox="0 0 19 19" width="19" height="19">
           <use xlinkHref="#play-s"></use>
         </svg>
@@ -37,7 +43,7 @@ const FilmFullInfo = ({film}) => {
   );
 
   return (
-    <section className="movie-card movie-card--full">
+    <section className="movie-card movie-card--full" style={{backgroundColor}}>
       <div className="movie-card__hero">
         <div className="movie-card__bg">
           <img src={backgroundImage} alt={name} />

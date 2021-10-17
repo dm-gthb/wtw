@@ -6,6 +6,7 @@ export default shape({
   id: number.isRequired,
   name: string.isRequired,
   backgroundImage: string.isRequired,
+  backgroundColor: string.isRequired,
   previewImage: string.isRequired,
   description: string.isRequired,
   rating: number.isRequired,
