@@ -1,5 +1,5 @@
 import React from 'react';
-import WrapperPage from '../error-page/error-page';
+import WrapperPage from '../wrapper-page/wrapper-page';
 
 const NotFoundPage = () => {
   return (

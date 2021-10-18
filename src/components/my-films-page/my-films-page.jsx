@@ -5,10 +5,10 @@ import {
   selectFavoriteFilms,
   selectFavoriteFilmsLoadingStatus
 } from '../../store/films-data/films-data';
-import FilmsList from '../films-list/films-list';
 import PageFooter from '../page-footer/page-footer';
 import PageHeader from '../page-header/page-header';
 import {useLoadingStatus} from '../../hooks/useLoadingStatus';
+import FilmsCatalog from '../films-catalog/films-catalog';
 
 const MyFilmsPage = () => {
   const dispatch = useDispatch();
@@ -29,13 +29,7 @@ const MyFilmsPage = () => {
         </div>
       );
     }
-
-    return (
-      <section className="catalog">
-        <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <FilmsList films={films} />
-      </section>
-    );
+    return <FilmsCatalog films={films} />;
   };
 
   return (
