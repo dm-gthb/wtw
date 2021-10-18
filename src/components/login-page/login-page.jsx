@@ -1,20 +1,25 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {login} from '../../store/user/user';
 import PageFooter from '../page-footer/page-footer';
 import PageHeader from '../page-header/page-header';
+import browserHistory from '../../browser-history';
 
 const LoginPage = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const dispatch = useDispatch();
+  const [isLoginError, setIsLoginError] = useState(false);
 
   const handleSumbit = (evt) => {
     evt.preventDefault();
     dispatch(login({
       email: emailRef.current.value,
       password: passwordRef.current.value,
-    }));
+    }))
+    .unwrap()
+    .then(() => browserHistory.push(`/`))
+    .catch(() => setIsLoginError(true));
   };
 
   return (
@@ -27,6 +32,9 @@ const LoginPage = () => {
           className="sign-in__form"
           onSubmit={handleSumbit}
         >
+          {isLoginError && <div className="sign-in__message">
+            <p>We can’t recognize this email <br/> and password combination. Please try again.</p>
+          </div>}
           <div className="sign-in__fields">
             <div className="sign-in__field">
               <input ref={emailRef} className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email" />

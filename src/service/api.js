@@ -92,7 +92,7 @@ class API {
       });
       return this._transformUserServerData(userData);
     } catch (err) {
-      return null;
+      throw err;
     }
   }
 
