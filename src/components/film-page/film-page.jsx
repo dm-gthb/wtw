@@ -3,33 +3,26 @@ import {useSelector, useDispatch} from 'react-redux';
 import {useParams} from 'react-router-dom';
 import FilmsList from '../films-list/films-list';
 import FilmFullInfo from '../film-full-info/film-full-info';
-import Spinner from '../spinner/spinner';
+import WrapperPage from '../wrapper-page/wrapper-page';
 import {
   fetchCurrentFilm,
   selectCurrentFilm,
   selectCurrentFilmLoadingStatus
 } from '../../store/films-data/films-data';
-import {LoadingStatus} from '../../constants';
-import LoadingErrorPage from '../loading-error-page/loading-error-page';
+import {useLoadingStatus} from '../../hooks/useLoadingStatus';
 
 const FilmPage = () => {
   const {id} = useParams();
   const dispatch = useDispatch();
-  const loadingStatus = useSelector(selectCurrentFilmLoadingStatus);
+  const [isDataLoaded, onLoadingComponent] = useLoadingStatus(selectCurrentFilmLoadingStatus);
   const currentFilm = useSelector(selectCurrentFilm);
-  const isDataLoaded = loadingStatus === LoadingStatus.SUCCEEDED;
-  const isLoadingError = loadingStatus === LoadingStatus.FAILED;
 
   useEffect(() => {
     dispatch(fetchCurrentFilm(id));
   }, [id]);
 
-  if (isLoadingError) {
-    return <LoadingErrorPage />;
-  }
-
   if (!isDataLoaded) {
-    return <Spinner />;
+    return <WrapperPage>{onLoadingComponent}</WrapperPage>;
   }
 
   return (

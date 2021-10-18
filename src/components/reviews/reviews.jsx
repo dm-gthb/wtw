@@ -4,33 +4,41 @@ import {useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
 import {fetchReviews, selectReviews, selectReviewsLoadingStatus} from '../../store/reviews/reviews';
 import Review from '../review/review';
-import Spinner from '../spinner/spinner';
-import {LoadingStatus} from '../../constants';
+import {useLoadingStatus} from '../../hooks/useLoadingStatus';
 
 const Reviews = ({filmId}) => {
   const dispatch = useDispatch();
-  const reviewsLoadingStatus = useSelector(selectReviewsLoadingStatus);
   const reviews = useSelector(selectReviews);
-  const isDataLoaded = reviewsLoadingStatus === LoadingStatus.SUCCEEDED;
+  const [isDataLoaded, onLoadingComponent] = useLoadingStatus(selectReviewsLoadingStatus);
 
   useEffect(() => {
     dispatch(fetchReviews(filmId));
   }, [filmId]);
 
-  if (isDataLoaded) {
+  if (!isDataLoaded) {
     return (
       <div className="movie-card__reviews movie-card__row">
         <div className="movie-card__reviews-col">
-          {reviews.length ? reviews.map((review) => <Review key={review.id} review={review} />) : `no reviews yet`}
+          {onLoadingComponent}
         </div>
       </div>
     );
   }
 
+  const renderContent = () => {
+    if (!isDataLoaded) {
+      return {onLoadingComponent};
+    }
+
+    return reviews.length ?
+      reviews.map((review) => <Review key={review.id} review={review} />) :
+      `no reviews yet`;
+  };
+
   return (
     <div className="movie-card__reviews movie-card__row">
       <div className="movie-card__reviews-col">
-        <Spinner />
+        {renderContent()}
       </div>
     </div>
   );

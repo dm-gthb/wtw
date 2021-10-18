@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PageFooter from '../page-footer/page-footer';
 
-const ErrorPage = ({children}) => {
+const WrapperPage = ({children}) => {
   return (
     <div className="user-page">
       <div className="user-page__content">
@@ -13,8 +13,8 @@ const ErrorPage = ({children}) => {
   );
 };
 
-ErrorPage.propTypes = {
+WrapperPage.propTypes = {
   children: PropTypes.node.isRequired
 };
 
-export default ErrorPage;
+export default WrapperPage;

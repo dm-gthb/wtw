@@ -3,27 +3,20 @@ import FilmHeadInfo from '../film-head-info/film-head-info';
 import PageHeader from '../page-header/page-header';
 import Poster from '../poster/poster';
 import browserHistory from '../../browser-history';
-import {AppRoute, LoadingStatus} from '../../constants';
+import {AppRoute} from '../../constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchPromoFilm, selectPromoFilm, selectPromoFilmLoadingStatus} from '../../store/films-data/films-data';
-import Spinner from '../spinner/spinner';
-import LoadingErrorPage from '../loading-error-page/loading-error-page';
+import {useLoadingStatus} from '../../hooks/useLoadingStatus';
 
 const Promo = () => {
   const dispatch = useDispatch();
-  const loadingStatus = useSelector(selectPromoFilmLoadingStatus);
   const film = useSelector(selectPromoFilm);
-  const isDataLoaded = loadingStatus === LoadingStatus.SUCCEEDED;
-  const isLoadingError = loadingStatus === LoadingStatus.FAILED;
+  const [isDataLoaded, onLoadingComponent] = useLoadingStatus(selectPromoFilmLoadingStatus);
   const handlePlayButtonClick = () => browserHistory.push(`${AppRoute.PLAYER}/${film.id}`);
 
   useEffect(() => {
     dispatch(fetchPromoFilm());
   }, []);
-
-  if (isLoadingError) {
-    return <LoadingErrorPage />;
-  }
 
   if (!isDataLoaded) {
     return (
@@ -31,7 +24,7 @@ const Promo = () => {
         <div className="movie-card__bg" />
         <h1 className="visually-hidden">WTW</h1>
         <PageHeader className="movie-card__head" />
-        <Spinner />
+        {onLoadingComponent}
       </section>
     );
   }

@@ -1,9 +1,8 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {DEFAULT_GENRE_FILTER, LoadingStatus, MAX_FILMS_CARDS_TO_RENDER_ONCE} from '../../constants';
+import {DEFAULT_GENRE_FILTER, MAX_FILMS_CARDS_TO_RENDER_ONCE} from '../../constants';
 import FilmsList from '../films-list/films-list';
 import GenresTabs from '../genres-tabs/genres-tabs';
-import Spinner from '../spinner/spinner';
 import {
   selectFilmsByGenre,
   selectGenres,
@@ -15,13 +14,14 @@ import {
   selectCardsCount,
   setGenreFilter
 } from '../../store/films-filter/films-filter';
+import {useLoadingStatus} from '../../hooks/useLoadingStatus';
 
 const Catalog = () => {
   const dispatch = useDispatch();
   const genres = useSelector(selectGenres);
   const films = useSelector(selectFilmsByGenre);
   const currentCardsCount = useSelector(selectCardsCount);
-  const loadingStatus = useSelector(selectFilmsListLoadingStatus);
+  const [isDataLoaded, onLoadingComponent] = useLoadingStatus(selectFilmsListLoadingStatus);
   const filmCardsToRender = films.slice(0, currentCardsCount);
 
   const handleTabClick = (genre) => {
@@ -63,16 +63,24 @@ const Catalog = () => {
     return null;
   };
 
-  if (loadingStatus === LoadingStatus.LOADING) {
-    return <Spinner />;
-  }
+  const renderContent = () => {
+    if (!isDataLoaded) {
+      return onLoadingComponent;
+    }
+
+    return (
+      <>
+        {renderGenres()}
+        <FilmsList films={filmCardsToRender} />
+        {renderShowMoreButton()}
+      </>
+    );
+  };
 
   return (
     <section className="catalog">
       <h2 className="catalog__title visually-hidden">Catalog</h2>
-      {renderGenres()}
-      <FilmsList films={filmCardsToRender} />
-      {renderShowMoreButton()}
+      {renderContent()}
     </section>
   );
 };
