@@ -1,25 +1,13 @@
 import React from 'react';
-import {useDispatch, useSelector} from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import {MAX_FILMS_CARDS_TO_RENDER_ONCE} from '../../constants';
 import FilmsList from '../films-list/films-list';
-import {
-  increaseCardsCount,
-  selectCardsCount,
-} from '../../store/films-filter/films-filter';
 import filmProp from '../../prop-types/film.prop';
+import {useFilmCardsCount} from '../../hooks/useFilmCardsCount';
 
 const FilmsCatalog = ({films, className, children}) => {
-  const dispatch = useDispatch();
-  const currentCardsCount = useSelector(selectCardsCount);
+  const [currentCardsCount, increaseCardsCount] = useFilmCardsCount(films.length);
   const filmsToRender = films.slice(0, currentCardsCount);
-
-  const handleShowMoreButtonClick = () => {
-    const remainingCardsCount = films.length - currentCardsCount;
-    const countToIncrease = Math.min(remainingCardsCount, MAX_FILMS_CARDS_TO_RENDER_ONCE);
-    dispatch(increaseCardsCount(countToIncrease));
-  };
 
   const renderShowMoreButton = () => {
     if (currentCardsCount < films.length) {
@@ -27,7 +15,7 @@ const FilmsCatalog = ({films, className, children}) => {
         <button
           className="catalog__button"
           type="button"
-          onClick={handleShowMoreButtonClick}
+          onClick={increaseCardsCount}
         >
           Show more
         </button>
