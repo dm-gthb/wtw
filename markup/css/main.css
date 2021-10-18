@@ -756,6 +756,10 @@ main {
   margin-right: 14px; }
   .movie-card__button:last-child {
     margin-right: 0; }
+  .movie-card__button:disabled:hover {
+    transform: scale(1);
+    background: rgba(0,0,0,.26);
+    cursor: default; }
 
 .movie-card__translate-top {
   margin-top: -170px;

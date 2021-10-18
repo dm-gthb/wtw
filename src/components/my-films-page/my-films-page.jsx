@@ -16,7 +16,9 @@ const MyFilmsPage = () => {
   const [isDataLoaded, onLoadingComponent] = useLoadingStatus(selectFavoriteFilmsListLoadingStatus);
 
   useEffect(() => {
-    dispatch(fetchFavoritesFilms());
+    if (!isDataLoaded) {
+      dispatch(fetchFavoritesFilms());
+    }
   }, []);
 
   const renderContent = () => {
@@ -28,7 +30,12 @@ const MyFilmsPage = () => {
       );
     }
 
-    return <FilmsList films={films} />;
+    return (
+      <section className="catalog">
+        <h2 className="catalog__title visually-hidden">Catalog</h2>
+        <FilmsList films={films} />
+      </section>
+    );
   };
 
   return (

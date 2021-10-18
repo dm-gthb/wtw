@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import FilmActionButtons from '../film-action-buttons/film-action-buttons';
 
-const FilmHeadInfo = ({film, renderButtons}) => {
-  const {name, genre, released} = film;
+const FilmHeadInfo = ({film, children}) => {
+  const {id, name, genre, released} = film;
   return (
     <div className="movie-card__desc">
       <h2 className="movie-card__title">{name}</h2>
@@ -11,7 +12,9 @@ const FilmHeadInfo = ({film, renderButtons}) => {
         <span className="movie-card__year">{released}</span>
       </p>
       <div className="movie-card__buttons">
-        {renderButtons()}
+        <FilmActionButtons filmId={id}>
+          {children}
+        </FilmActionButtons>
       </div>
     </div>
   );
@@ -19,7 +22,7 @@ const FilmHeadInfo = ({film, renderButtons}) => {
 
 FilmHeadInfo.propTypes = {
   film: PropTypes.object.isRequired,
-  renderButtons: PropTypes.func.isRequired,
+  children: PropTypes.node,
 };
 
 export default FilmHeadInfo;

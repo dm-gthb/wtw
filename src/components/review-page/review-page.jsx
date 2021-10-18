@@ -4,10 +4,12 @@ import PageHeader from '../page-header/page-header';
 import Poster from '../poster/poster';
 import ReviewForm from '../review-form/review-form';
 import {useSelector} from 'react-redux';
-import {selectCurrentFilm} from '../../store/films-data/films-data';
+import {selectFilmById} from '../../store/films-data/films-data';
+import {useParams} from 'react-router';
 
 const ReviewPage = () => {
-  const film = useSelector(selectCurrentFilm);
+  const {id} = useParams();
+  const film = useSelector((state) => (selectFilmById(state, +id)));
   const {name, posterImage, backgroundImage} = film;
   return (
     <section className="movie-card movie-card--full">
@@ -24,7 +26,7 @@ const ReviewPage = () => {
         />
       </div>
       <div className="add-review">
-        <ReviewForm filmId={film.id} />
+        <ReviewForm filmId={+id} />
       </div>
     </section>
   );

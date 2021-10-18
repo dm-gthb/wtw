@@ -54,6 +54,11 @@ export const APIRoute = {
   FAVOFITE: `/favorite`,
 };
 
+export const FavoriteStatus = {
+  ADDING: 1,
+  REMOVING: 0
+};
+
 export const ReviewCommentLength = {
   MIN: 5,
   MAX: 400

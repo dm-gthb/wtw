@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {APIRoute, HttpCode, HttpMethod} from '../constants';
+import {APIRoute, FavoriteStatus, HttpCode, HttpMethod} from '../constants';
 
 const BACKEND_URL = ``;
 const REQUEST_TIMEOUT = 5000;
@@ -43,11 +43,6 @@ class API {
     return rawFilmsData.map(this._transformFilmServerData);
   }
 
-  async getFilm(id) {
-    const rawFilmData = await this._load(`${APIRoute.FILMS}/${id}`);
-    return this._transformFilmServerData(rawFilmData);
-  }
-
   async getPromoFilm() {
     const rawFilmData = await this._load(`${APIRoute.FILMS}${APIRoute.PROMO}`);
     return this._transformFilmServerData(rawFilmData);
@@ -56,6 +51,28 @@ class API {
   async getFavoritesFilms() {
     const rawFilmsData = await this._load(APIRoute.FAVOFITE);
     return rawFilmsData.map(this._transformFilmServerData);
+  }
+
+  async addFilmToFavorites(filmId) {
+    try {
+      const rawFilmData = await this._load(`${APIRoute.FAVOFITE}/${filmId}/${FavoriteStatus.ADDING}`, {
+        method: HttpMethod.POST,
+      });
+      return this._transformFilmServerData(rawFilmData);
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async removeFilmFromFavorites(filmId) {
+    try {
+      const rawFilmData = await this._load(`${APIRoute.FAVOFITE}/${filmId}/${FavoriteStatus.REMOVING}`, {
+        method: HttpMethod.POST,
+      });
+      return this._transformFilmServerData(rawFilmData);
+    } catch (err) {
+      throw err;
+    }
   }
 
   async checkAuth() {
@@ -117,6 +134,7 @@ class API {
       released: film.released,
       previewVideoLink: film.preview_video_link,
       backgroundColor: film.background_color,
+      isFavorite: film.is_favorite
     };
   }
 
