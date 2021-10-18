@@ -1,5 +1,5 @@
 import {LoadingStatus} from '../../constants';
-import reducer, {fetchFavoritesFilms, fetchFilms, fetchPromoFilm} from './films-data';
+import reducer, {fetchFavoriteFilms, fetchAllFilms, fetchPromoFilm} from './films-data';
 
 describe(`Reducer works correctly`, () => {
   const initialState = {
@@ -31,7 +31,7 @@ describe(`Reducer works correctly`, () => {
 
   describe(`Films list fetching works correctly`, () => {
     it(`should handle requesting films`, () => {
-      expect(reducer(initialState, fetchFilms.pending())).toEqual({
+      expect(reducer(initialState, fetchAllFilms.pending())).toEqual({
         ...initialState,
         films: [],
         filmsLoadingStatus: LoadingStatus.LOADING,
@@ -46,7 +46,7 @@ describe(`Reducer works correctly`, () => {
         }
       ];
 
-      expect(reducer(initialState, fetchFilms.fulfilled(loadedFilms))).toEqual({
+      expect(reducer(initialState, fetchAllFilms.fulfilled(loadedFilms))).toEqual({
         ...initialState,
         films: loadedFilms,
         filmsLoadingStatus: LoadingStatus.SUCCEEDED,
@@ -54,7 +54,7 @@ describe(`Reducer works correctly`, () => {
     });
 
     it(`should handle loading error`, () => {
-      expect(reducer(initialState, fetchFilms.rejected())).toEqual({
+      expect(reducer(initialState, fetchAllFilms.rejected())).toEqual({
         ...initialState,
         films: [],
         filmsLoadingStatus: LoadingStatus.FAILED,
@@ -64,7 +64,7 @@ describe(`Reducer works correctly`, () => {
 
   describe(`Favorite films fetching works correctly`, () => {
     it(`should handle requesting films`, () => {
-      expect(reducer(initialState, fetchFavoritesFilms.pending())).toEqual({
+      expect(reducer(initialState, fetchFavoriteFilms.pending())).toEqual({
         ...initialState,
         favoriteFilms: [],
         favoriteFilmsLoadingStatus: LoadingStatus.LOADING,
@@ -79,7 +79,7 @@ describe(`Reducer works correctly`, () => {
         }
       ];
 
-      expect(reducer(initialState, fetchFavoritesFilms.fulfilled(loadedFilms))).toEqual({
+      expect(reducer(initialState, fetchFavoriteFilms.fulfilled(loadedFilms))).toEqual({
         ...initialState,
         favoriteFilms: loadedFilms,
         favoriteFilmsLoadingStatus: LoadingStatus.SUCCEEDED,
@@ -87,7 +87,7 @@ describe(`Reducer works correctly`, () => {
     });
 
     it(`should handle loading error`, () => {
-      expect(reducer(initialState, fetchFavoritesFilms.rejected())).toEqual({
+      expect(reducer(initialState, fetchFavoriteFilms.rejected())).toEqual({
         ...initialState,
         favoriteFilms: [],
         favoriteFilmsLoadingStatus: LoadingStatus.FAILED,

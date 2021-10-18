@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {
-  fetchFavoritesFilms,
+  fetchFavoriteFilms,
   selectFavoriteFilms,
-  selectFavoriteFilmsListLoadingStatus
+  selectFavoriteFilmsLoadingStatus
 } from '../../store/films-data/films-data';
 import FilmsList from '../films-list/films-list';
 import PageFooter from '../page-footer/page-footer';
@@ -13,11 +13,11 @@ import {useLoadingStatus} from '../../hooks/useLoadingStatus';
 const MyFilmsPage = () => {
   const dispatch = useDispatch();
   const films = useSelector(selectFavoriteFilms);
-  const [isDataLoaded, onLoadingComponent] = useLoadingStatus(selectFavoriteFilmsListLoadingStatus);
+  const [isDataLoaded, onLoadingComponent] = useLoadingStatus(selectFavoriteFilmsLoadingStatus);
 
   useEffect(() => {
     if (!isDataLoaded) {
-      dispatch(fetchFavoritesFilms());
+      dispatch(fetchFavoriteFilms());
     }
   }, []);
 

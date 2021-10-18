@@ -6,7 +6,7 @@ import GenresTabs from '../genres-tabs/genres-tabs';
 import {
   selectFilmsByGenre,
   selectGenres,
-  selectFilmsListLoadingStatus,
+  selectFilmsLoadingStatus,
 } from '../../store/films-data/films-data';
 import {
   increaseCardsCount,
@@ -21,7 +21,7 @@ const Catalog = () => {
   const genres = useSelector(selectGenres);
   const films = useSelector(selectFilmsByGenre);
   const currentCardsCount = useSelector(selectCardsCount);
-  const [isDataLoaded, onLoadingComponent] = useLoadingStatus(selectFilmsListLoadingStatus);
+  const [isDataLoaded, onLoadingComponent] = useLoadingStatus(selectFilmsLoadingStatus);
   const filmCardsToRender = films.slice(0, currentCardsCount);
 
   const handleTabClick = (genre) => {
