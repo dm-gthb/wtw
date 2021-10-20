@@ -3,6 +3,7 @@ import {createSelector} from 'reselect';
 import {
   DEFAULT_GENRE_FILTER,
   LoadingStatus,
+  MAX_GENRES_COUNT,
   SliceName
 } from '../../constants';
 import {getActionNameBySlice} from '../../util/util';
@@ -130,7 +131,13 @@ export const selectAllFilms = (state) => state[SliceName.FILMS_DATA].films;
 
 export const selectGenres = createSelector(
     selectAllFilms,
-    (films) => [DEFAULT_GENRE_FILTER, ...new Set(films.map((film) => film.genre))]
+    (films) => {
+      const uniqGenres = new Set(films.map((film) => film.genre));
+      if (uniqGenres.size > MAX_GENRES_COUNT - 1) {
+        return [DEFAULT_GENRE_FILTER, ...uniqGenres].slice(0, MAX_GENRES_COUNT);
+      }
+      return [DEFAULT_GENRE_FILTER, ...uniqGenres];
+    }
 );
 
 export const selectFilmsByGenre = createSelector(
