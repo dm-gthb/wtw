@@ -19,7 +19,7 @@ const MyFilmsPage = () => {
     if (!isDataLoaded) {
       dispatch(fetchFavoriteFilms());
     }
-  }, []);
+  }, [isDataLoaded, dispatch]);
 
   const renderContent = () => {
     if (!isDataLoaded) {

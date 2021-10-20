@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import filmProp from '../../prop-types/film.prop';
 import {AppRoute, KeyboardKey} from '../../constants';
 import browserHistory from '../../browser-history';
@@ -32,12 +32,6 @@ const FullScreenVideoPlayer = ({film}) => {
     }
   };
 
-  const handleKeyDown = (evt) => {
-    if (evt.key === KeyboardKey.ESCAPE) {
-      tryExitFullScreen();
-    }
-  };
-
   const handlePlayPauseButtonClick = () => {
     setIsPlaying((prevIsPlaying) => !prevIsPlaying);
   };
@@ -47,12 +41,17 @@ const FullScreenVideoPlayer = ({film}) => {
     setIsVideoEnded(true);
   };
 
-  const handleVideoLoad = (elementRef) => {
+  const handleVideoLoad = useCallback((elementRef) => {
     setVideoRef(elementRef);
     setIsLoading(false);
-  };
+  }, []);
 
   useEffect(() => {
+    const handleKeyDown = (evt) => {
+      if (evt.key === KeyboardKey.ESCAPE) {
+        tryExitFullScreen();
+      }
+    };
     window.addEventListener(`keydown`, handleKeyDown);
     return () => {
       window.removeEventListener(`keydown`, handleKeyDown);

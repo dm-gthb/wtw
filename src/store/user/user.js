@@ -1,8 +1,8 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {AuthStatus, SliceName} from '../../constants';
+import {getActionNameBySlice} from '../../util/util';
 
-const CHECK_AUTH_STATUS = `checkAuth`;
-const LOGIN = `login`;
+const getThunkName = (action) => getActionNameBySlice(SliceName.FILMS_DATA, action);
 
 const initialState = {
   auth: AuthStatus.NO_AUTH,
@@ -15,7 +15,7 @@ const handleUserData = (userData) => ({
 });
 
 export const checkAuth = createAsyncThunk(
-    `${SliceName.USER}/${CHECK_AUTH_STATUS}`,
+    getThunkName(`checkAuth`),
     async (_, {extra: api}) => {
       const userData = await api.checkAuth();
       return handleUserData(userData);
@@ -23,7 +23,7 @@ export const checkAuth = createAsyncThunk(
 );
 
 export const login = createAsyncThunk(
-    `${SliceName.USER}/${LOGIN}`,
+    getThunkName(`login`),
     async (data, {extra: api}) => {
       const userData = await api.login(data);
       return handleUserData(userData);

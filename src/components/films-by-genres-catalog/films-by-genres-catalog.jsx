@@ -1,21 +1,43 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useSelector} from 'react-redux';
-import {DEFAULT_GENRE_FILTER} from '../../constants';
-import {selectGenres} from '../../store/films-data/films-data';
+import {selectGenres, selectPromoFilmLoadingStatus} from '../../store/films-data/films-data';
 import FilmsCatalog from '../films-catalog/films-catalog';
 import GenresTabs from '../genres-tabs/genres-tabs';
 import {useFilmsGenre} from '../../hooks/useFilmsGenre';
+import {useLoadingStatus} from '../../hooks/useLoadingStatus';
+import {useDispatch} from 'react-redux';
+import {
+  resetCardsCount,
+  selectGenreFilter
+} from '../../store/films-filter/films-filter';
 
 const FilmsByGenresCatalog = () => {
+  const dispatch = useDispatch();
+  const [isDataLoaded, onLoadingComponent] = useLoadingStatus(selectPromoFilmLoadingStatus);
   const genres = useSelector(selectGenres);
-  const [filteredFilms, handleGenreChange] = useFilmsGenre();
+  const genre = useSelector(selectGenreFilter);
+  const [filteredFilms, handleGenreChange, resetGenre] = useFilmsGenre();
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetCardsCount());
+    };
+  });
+
+  useEffect(() => () => {
+    return resetGenre();
+  }, [resetGenre]);
+
+  if (!isDataLoaded) {
+    return onLoadingComponent;
+  }
 
   return (
     <FilmsCatalog films={filteredFilms}>
       <GenresTabs
         genres={genres}
         onTabClick={handleGenreChange}
-        defaultGenre={DEFAULT_GENRE_FILTER}
+        defaultGenre={genre}
       />
     </FilmsCatalog>
   );

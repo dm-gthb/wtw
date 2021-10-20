@@ -1,13 +1,15 @@
+import {DEFAULT_GENRE_FILTER, MAX_FILMS_CARDS_TO_RENDER_ONCE} from '../../constants';
 import reducer, {
   increaseCardsCount,
   resetCardsCount,
+  resetGenreFilter,
   setGenreFilter
 } from './films-filter';
 
 describe(`Reducer works correctly`, () => {
   const initialState = {
-    genreFilter: `default`,
-    cardsCount: 0,
+    genreFilter: DEFAULT_GENRE_FILTER,
+    maxCardsCount: MAX_FILMS_CARDS_TO_RENDER_ONCE,
   };
 
   it(`should set genre filter`, () => {
@@ -17,17 +19,24 @@ describe(`Reducer works correctly`, () => {
     });
   });
 
+  it(`should reset genre filter`, () => {
+    expect(reducer(initialState, resetGenreFilter())).toEqual({
+      ...initialState,
+      genreFilter: DEFAULT_GENRE_FILTER,
+    });
+  });
+
   it(`should increase cards count`, () => {
     expect(reducer(initialState, increaseCardsCount(10))).toEqual({
       ...initialState,
-      cardsCount: 10
+      maxCardsCount: 10 + MAX_FILMS_CARDS_TO_RENDER_ONCE
     });
   });
 
   it(`should reset cards count`, () => {
     expect(reducer(initialState, resetCardsCount())).toEqual({
       ...initialState,
-      cardsCount: 0
+      maxCardsCount: MAX_FILMS_CARDS_TO_RENDER_ONCE
     });
   });
 });

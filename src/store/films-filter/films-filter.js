@@ -7,7 +7,7 @@ import {
 
 const initialState = {
   genreFilter: DEFAULT_GENRE_FILTER,
-  cardsCount: MAX_FILMS_CARDS_TO_RENDER_ONCE
+  maxCardsCount: MAX_FILMS_CARDS_TO_RENDER_ONCE
 };
 
 const filmsFilterSlice = createSlice({
@@ -17,17 +17,21 @@ const filmsFilterSlice = createSlice({
     setGenreFilter(state, action) {
       state.genreFilter = action.payload;
     },
+    resetGenreFilter(state) {
+      state.genreFilter = DEFAULT_GENRE_FILTER;
+    },
     increaseCardsCount(state, action) {
-      state.cardsCount = state.cardsCount + action.payload;
+      state.maxCardsCount = state.maxCardsCount + action.payload;
     },
     resetCardsCount(state) {
-      state.cardsCount = MAX_FILMS_CARDS_TO_RENDER_ONCE;
+      state.maxCardsCount = MAX_FILMS_CARDS_TO_RENDER_ONCE;
     }
   },
 });
 
 export const {
   setGenreFilter,
+  resetGenreFilter,
   increaseCardsCount,
   resetCardsCount,
 } = filmsFilterSlice.actions;
@@ -35,4 +39,4 @@ export const {
 export default filmsFilterSlice.reducer;
 
 export const selectGenreFilter = (state) => state[SliceName.FILMS_FILTER].genreFilter;
-export const selectCardsCount = (state) => state[SliceName.FILMS_FILTER].cardsCount;
+export const selectCardsCount = (state) => state[SliceName.FILMS_FILTER].maxCardsCount;

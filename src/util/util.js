@@ -19,3 +19,23 @@ export const convertSecondsToTime = (inputSeconds) => {
 
   return `${outputHours}:${outputMinutes}:${outputSeconds}`;
 };
+
+export const getSameFilmsAsCurrentByGenre = (allFilms, current, limit) => {
+  if (!allFilms.length) {
+    return [];
+  }
+
+  const filteredItems = [];
+  for (const film of allFilms) {
+    if (film.genre === current.genre && film.id !== current.id) {
+      filteredItems.push(film);
+    }
+    if (filteredItems.length === limit) {
+      break;
+    }
+  }
+
+  return filteredItems;
+};
+
+export const getActionNameBySlice = (slice, action) => `${slice}/${action}`;

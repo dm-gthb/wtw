@@ -15,7 +15,7 @@ const Promo = () => {
     if (!isDataLoaded) {
       dispatch(fetchPromoFilm());
     }
-  }, []);
+  }, [isDataLoaded, dispatch]);
 
   if (!isDataLoaded) {
     return (

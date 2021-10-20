@@ -16,11 +16,11 @@ const VideoPlayer = (props) => {
   const videoRef = useRef();
 
   useEffect(() => {
-    if (onLoad) {
-      videoRef.current.oncanplaythrough = () => {
+    videoRef.current.oncanplaythrough = () => {
+      if (onLoad) {
         onLoad(videoRef);
-      };
-    }
+      }
+    };
 
     return () => {
       videoRef.current.oncanplaythrough = null;
@@ -28,7 +28,7 @@ const VideoPlayer = (props) => {
       videoRef.current.onpause = null;
       videoRef.current = null;
     };
-  }, [src]);
+  }, [src, onLoad]);
 
   useEffect(() => {
     if (isPlaying) {

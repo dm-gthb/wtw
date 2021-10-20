@@ -1,8 +1,8 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {LoadingStatus, SliceName} from '../../constants';
+import {getActionNameBySlice} from '../../util/util';
 
-const FETCH_REVIEWS = `fetchReviews`;
-const POST_REVIEW = `postReview`;
+const getThunkName = (action) => getActionNameBySlice(SliceName.FILMS_DATA, action);
 
 const initialState = {
   reviews: [],
@@ -11,7 +11,7 @@ const initialState = {
 };
 
 export const fetchReviews = createAsyncThunk(
-    `${SliceName.FILMS_DATA}/${FETCH_REVIEWS}`,
+    getThunkName(`fetchReviews`),
     async (filmId, {extra: api}) => {
       const reviews = await api.getFilmReviews(filmId);
       return reviews;
@@ -19,7 +19,7 @@ export const fetchReviews = createAsyncThunk(
 );
 
 export const postReview = createAsyncThunk(
-    `${SliceName.FILMS_DATA}/${POST_REVIEW}`,
+    getThunkName(`postReview`),
     async (data, {extra: api}) => {
       const postedReview = await api.postReview(data);
       return postedReview;

@@ -13,7 +13,7 @@ const Reviews = ({filmId}) => {
 
   useEffect(() => {
     dispatch(fetchReviews(filmId));
-  }, [filmId]);
+  }, [filmId, dispatch]);
 
   if (!isDataLoaded) {
     return (

@@ -10,12 +10,12 @@ export const useLoadingStatus = (loadingStatusSelector) => {
   const isDataLoaded = loadingStatus === LoadingStatus.SUCCEEDED;
   const isLoadingError = loadingStatus === LoadingStatus.FAILED;
 
-  if (isLoadingError) {
-    component = <ErrorMessage />;
-  }
-
   if (!isDataLoaded) {
     component = <Spinner />;
+  }
+
+  if (!isDataLoaded && isLoadingError) {
+    component = <ErrorMessage />;
   }
 
   return [isDataLoaded, component];

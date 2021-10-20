@@ -1,6 +1,7 @@
+import {useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectFilmsByGenre} from '../store/films-data/films-data';
-import {resetCardsCount, setGenreFilter} from '../store/films-filter/films-filter';
+import {resetGenreFilter, setGenreFilter} from '../store/films-filter/films-filter';
 
 export const useFilmsGenre = () => {
   const dispatch = useDispatch();
@@ -8,8 +9,11 @@ export const useFilmsGenre = () => {
 
   const handleGenreChange = (genre) => {
     dispatch(setGenreFilter(genre));
-    dispatch(resetCardsCount());
   };
 
-  return [filteredFilms, handleGenreChange];
+  const resetGenre = useCallback(() => {
+    return dispatch(resetGenreFilter());
+  }, [dispatch]);
+
+  return [filteredFilms, handleGenreChange, resetGenre];
 };
