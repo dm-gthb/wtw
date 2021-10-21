@@ -1,3 +1,5 @@
+import {RatingRangeName} from '../constants';
+
 export const convertSecondsToTime = (inputSeconds) => {
   const SECONDS_IN_HOUR = 3600;
   const SECONDS_IN_MINUTE = 60;
@@ -39,3 +41,28 @@ export const getSameFilmsAsCurrentByGenre = (allFilms, current, limit) => {
 };
 
 export const getActionNameBySlice = (slice, action) => `${slice}/${action}`;
+
+export const getRatingName = (rating) => {
+  const ratingRanges = {
+    [RatingRangeName.BAD]: [0, 3],
+    [RatingRangeName.NORMAL]: [3, 5],
+    [RatingRangeName.GOOD]: [5, 8],
+    [RatingRangeName.VERY_GOOD]: [8, 10],
+    [RatingRangeName.AWESOME]: [10, 10],
+  };
+
+  for (const [ratingName, ratingNum] of Object.entries(ratingRanges)) {
+    const min = ratingNum[0];
+    const max = ratingNum[1];
+
+    if (min === max && rating === min) {
+      return ratingName;
+    }
+
+    if (rating >= min && rating < max) {
+      return ratingName;
+    }
+  }
+
+  return ``;
+};

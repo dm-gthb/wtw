@@ -68,6 +68,14 @@ export const KeyboardKey = {
   ESCAPE: `Escape`,
 };
 
+export const RatingRangeName = {
+  BAD: `Bad`,
+  NORMAL: `Normal`,
+  GOOD: `Good`,
+  VERY_GOOD: `Very good`,
+  AWESOME: `Awesome`,
+};
+
 export const MAX_RATING = 10;
 export const MAX_FILMS_CARDS_TO_RENDER_ONCE = 8;
 export const PREVIEW_VIDEO_PLAYING_TIMEOUT = 1000;
