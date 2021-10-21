@@ -1,18 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import PreviewCard from '../preview-card/preview-card';
 import filmProp from '../../prop-types/film.prop';
-import {useHandlingFilmId} from '../../hooks/useHandlingFilmId';
 
 const FilmsList = ({films}) => {
-  const [playingFilmId, setHandlingFilmId] = useHandlingFilmId();
+  const [activeCardId, setActiveCardId] = useState();
 
-  const handleMouseEnter = (id) => {
-    setHandlingFilmId(id);
-  };
-
-  const handleMouseLeave = () => {
-    setHandlingFilmId(null);
+  const handleCardActivationChange = (id, isActivated) => {
+    const activeId = isActivated ? id : null;
+    setActiveCardId(activeId);
   };
 
   if (!films.length) {
@@ -32,9 +28,8 @@ const FilmsList = ({films}) => {
             key={id}
             className="catalog__movies-card"
             film={film}
-            isVideoPlaying={id === playingFilmId}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            isVideoPlaying={id === activeCardId}
+            onActivationChange={handleCardActivationChange}
           />
         );
       })}

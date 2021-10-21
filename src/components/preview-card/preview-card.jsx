@@ -1,17 +1,31 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 import filmProp from '../../prop-types/film.prop';
-import {AppRoute} from '../../constants';
+import {AppRoute, PREVIEW_VIDEO_PLAYING_TIMEOUT} from '../../constants';
 import BaseVideoPlayer from '../base-video-player/base-video-player';
 import videoStyles from './video-styles';
 import browserHistory from '../../browser-history';
 
-const PreviewCard = ({className, film, isVideoPlaying, onMouseEnter, onMouseLeave}) => {
+const PreviewCard = ({className, film, isVideoPlaying, onActivationChange}) => {
+  let activationTimeout;
   const {id, name, previewImage, previewVideoLink} = film;
-  const handleMouseEnter = () => onMouseEnter(id);
-  const handleMouseLeave = () => onMouseLeave();
+
+  const handleMouseEnter = () => {
+    activationTimeout = setTimeout(() => {
+      if (activationTimeout) {
+        onActivationChange(id, true);
+      }
+    }, PREVIEW_VIDEO_PLAYING_TIMEOUT);
+  };
+
+  const handleMouseLeave = () => {
+    clearTimeout(activationTimeout);
+    onActivationChange(id, false);
+  };
+
+  useEffect(() => () => clearTimeout(activationTimeout));
 
   const renderContent = () => {
     if (isVideoPlaying) {
@@ -59,8 +73,7 @@ PreviewCard.propTypes = {
   className: PropTypes.string.isRequired,
   film: filmProp.isRequired,
   isVideoPlaying: PropTypes.bool.isRequired,
-  onMouseEnter: PropTypes.func.isRequired,
-  onMouseLeave: PropTypes.func.isRequired,
+  onActivationChange: PropTypes.func.isRequired,
 };
 
 export default React.memo(PreviewCard, (prevProps, nextProps) => {
