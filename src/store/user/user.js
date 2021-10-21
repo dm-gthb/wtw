@@ -9,9 +9,9 @@ const initialState = {
   userData: null,
 };
 
-const handleUserData = (userData) => ({
-  userData,
-  auth: userData ? AuthStatus.AUTH : AuthStatus.NO_AUTH
+const handleUserData = (data) => ({
+  userData: data,
+  auth: data ? AuthStatus.AUTH : AuthStatus.NO_AUTH
 });
 
 export const checkAuth = createAsyncThunk(

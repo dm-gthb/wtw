@@ -54,67 +54,43 @@ class API {
   }
 
   async addFilmToFavorites(filmId) {
-    try {
-      const rawFilmData = await this._load(`${APIRoute.FAVOFITE}/${filmId}/${FavoriteStatus.ADDING}`, {
-        method: HttpMethod.POST,
-      });
-      return this._transformFilmServerData(rawFilmData);
-    } catch (err) {
-      throw err;
-    }
+    const rawFilmData = await this._load(`${APIRoute.FAVOFITE}/${filmId}/${FavoriteStatus.ADDING}`, {
+      method: HttpMethod.POST,
+    });
+    return this._transformFilmServerData(rawFilmData);
   }
 
   async removeFilmFromFavorites(filmId) {
-    try {
-      const rawFilmData = await this._load(`${APIRoute.FAVOFITE}/${filmId}/${FavoriteStatus.REMOVING}`, {
-        method: HttpMethod.POST,
-      });
-      return this._transformFilmServerData(rawFilmData);
-    } catch (err) {
-      throw err;
-    }
+    const rawFilmData = await this._load(`${APIRoute.FAVOFITE}/${filmId}/${FavoriteStatus.REMOVING}`, {
+      method: HttpMethod.POST,
+    });
+    return this._transformFilmServerData(rawFilmData);
   }
 
   async checkAuth() {
-    try {
-      const userData = await this._load(APIRoute.LOGIN);
-      return this._transformUserServerData(userData);
-    } catch (err) {
-      return null;
-    }
+    const userData = await this._load(`${APIRoute.LOGIN}`);
+    return this._transformUserServerData(userData);
   }
 
   async login(data) {
-    try {
-      const userData = await this._load(APIRoute.LOGIN, {
-        method: HttpMethod.POST,
-        data
-      });
-      return this._transformUserServerData(userData);
-    } catch (err) {
-      throw err;
-    }
+    const userData = await this._load(APIRoute.LOGIN, {
+      method: HttpMethod.POST,
+      data
+    });
+    return this._transformUserServerData(userData);
   }
 
   async getFilmReviews(filmId) {
-    try {
-      const reviews = await this._load(`${APIRoute.REVIEWS}/${filmId}`);
-      return reviews;
-    } catch (err) {
-      throw err;
-    }
+    const reviews = await this._load(`${APIRoute.REVIEWS}/${filmId}`);
+    return reviews;
   }
 
   async postReview({filmId, formData}) {
-    try {
-      const postedReview = await this._load(`${APIRoute.REVIEWS}/${filmId}`, {
-        method: HttpMethod.POST,
-        data: formData
-      });
-      return postedReview;
-    } catch (err) {
-      throw err;
-    }
+    const postedReview = await this._load(`${APIRoute.REVIEWS}/${filmId}`, {
+      method: HttpMethod.POST,
+      data: formData
+    });
+    return postedReview;
   }
 
   _transformFilmServerData(film) {
