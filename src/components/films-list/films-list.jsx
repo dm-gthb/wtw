@@ -1,26 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import PreviewCard from '../preview-card/preview-card';
 import filmProp from '../../prop-types/film.prop';
-import {PREVIEW_VIDEO_PLAYING_TIMEOUT} from '../../constants';
+import {useHandlingFilmId} from '../../hooks/useHandlingFilmId';
 
 const FilmsList = ({films}) => {
-  let playTimeout;
+  const [playingFilmId, setHandlingFilmId] = useHandlingFilmId();
 
-  const [playingFilmId, setPlayingFilmId] = useState();
-
-  const handleVideoPlay = (id) => {
-    playTimeout = setTimeout(() => {
-      setPlayingFilmId(id);
-    }, PREVIEW_VIDEO_PLAYING_TIMEOUT);
+  const handleMouseEnter = (id) => {
+    setHandlingFilmId(id);
   };
 
-  const handleVideoStop = () => {
-    clearTimeout(playTimeout);
-    setPlayingFilmId(null);
+  const handleMouseLeave = () => {
+    setHandlingFilmId(null);
   };
-
-  useEffect(() => () => clearTimeout(playTimeout), [playTimeout]);
 
   if (!films.length) {
     return (
@@ -40,8 +33,8 @@ const FilmsList = ({films}) => {
             className="catalog__movies-card"
             film={film}
             isVideoPlaying={id === playingFilmId}
-            onPlayVideo={handleVideoPlay}
-            onStopVideo={handleVideoStop}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           />
         );
       })}

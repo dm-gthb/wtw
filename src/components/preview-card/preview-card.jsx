@@ -8,10 +8,10 @@ import BaseVideoPlayer from '../base-video-player/base-video-player';
 import videoStyles from './video-styles';
 import browserHistory from '../../browser-history';
 
-const PreviewCard = ({className, film, isVideoPlaying, onPlayVideo, onStopVideo}) => {
+const PreviewCard = ({className, film, isVideoPlaying, onMouseEnter, onMouseLeave}) => {
   const {id, name, previewImage, previewVideoLink} = film;
-  const handleMouseEnter = () => onPlayVideo(id);
-  const handleMouseLeave = () => onStopVideo();
+  const handleMouseEnter = () => onMouseEnter(id);
+  const handleMouseLeave = () => onMouseLeave();
 
   const renderContent = () => {
     if (isVideoPlaying) {
@@ -59,8 +59,8 @@ PreviewCard.propTypes = {
   className: PropTypes.string.isRequired,
   film: filmProp.isRequired,
   isVideoPlaying: PropTypes.bool.isRequired,
-  onPlayVideo: PropTypes.func.isRequired,
-  onStopVideo: PropTypes.func.isRequired,
+  onMouseEnter: PropTypes.func.isRequired,
+  onMouseLeave: PropTypes.func.isRequired,
 };
 
 export default React.memo(PreviewCard, (prevProps, nextProps) => {
