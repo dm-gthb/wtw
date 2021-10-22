@@ -1336,12 +1336,15 @@ main {
   color: inherit; }
 
 .user-block {
+  display: flex;
+  align-items: center;
   margin-left: auto; }
 
 .user-block__avatar {
   width: 63px;
   height: 63px;
   overflow: hidden;
+  margin-left: 40px;
   border-radius: 50%; }
   .user-block__avatar img {
     vertical-align: top;
@@ -1351,8 +1354,16 @@ main {
        font-family: "object-fit:cover";
        object-fit: cover; }
 
+.user-block__links {
+  position: absolute;
+  display: none;
+  padding: 25px 0; }
+
+.user-block:hover .user-block__links {
+  display: block; }
+
 .user-block__link {
-  display: block;
+  display: inline-block;
   font-size: 20px;
   line-height: 24px;
   color: #DFCF77;
@@ -1362,6 +1373,15 @@ main {
   transition: color 0.2s; }
   .user-block__link:hover {
     color: #C9B37E; }
+
+.user-block__link {
+  margin-left: 40px; }
+
+.user-block__link--btn {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer; }
 
 .user-page {
   background-image: -webkit-gradient(linear, left top, left bottom, from(#170202), to(#0c0101));

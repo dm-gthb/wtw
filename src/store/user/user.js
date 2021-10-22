@@ -30,6 +30,14 @@ export const login = createAsyncThunk(
     }
 );
 
+export const logout = createAsyncThunk(
+    getThunkName(`logout`),
+    async (_, {extra: api}) => {
+      const userData = await api.logout();
+      return handleUserData(userData);
+    }
+);
+
 const userSlice = createSlice({
   name: SliceName.USER,
   initialState,
@@ -40,6 +48,10 @@ const userSlice = createSlice({
         state.auth = action.payload.auth;
       })
       .addCase(login.fulfilled, (state, action) => {
+        state.userData = action.payload.userData;
+        state.auth = action.payload.auth;
+      })
+      .addCase(logout.fulfilled, (state, action) => {
         state.userData = action.payload.userData;
         state.auth = action.payload.auth;
       });

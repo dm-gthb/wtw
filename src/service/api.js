@@ -80,6 +80,11 @@ class API {
     return this._transformUserServerData(userData);
   }
 
+  async logout() {
+    const result = await this._load(APIRoute.LOGOUT);
+    return result;
+  }
+
   async getFilmReviews(filmId) {
     const reviews = await this._load(`${APIRoute.REVIEWS}/${filmId}`);
     return reviews;
