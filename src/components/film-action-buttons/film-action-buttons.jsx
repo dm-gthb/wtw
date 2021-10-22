@@ -7,23 +7,26 @@ import {
   selectFavoritePostingStatus,
   selectIsFavoriteById
 } from '../../store/films-data/films-data';
-import {AppRoute, AuthStatus, LoadingStatus} from '../../constants';
+import {AppRoute, LoadingStatus} from '../../constants';
 import browserHistory from '../../browser-history';
-import {selectAuthStatus} from '../../store/user/user';
 
 const FilmActionButtons = ({filmId, children}) => {
   const dispatch = useDispatch();
   const favoritePostingStatus = useSelector(selectFavoritePostingStatus);
-  const authStatus = useSelector(selectAuthStatus);
-  const isFavorStatusLoading = favoritePostingStatus === LoadingStatus.LOADING;
+  const isFavoriteStatusLoading = favoritePostingStatus === LoadingStatus.LOADING;
   const isFavorite = useSelector((state) => selectIsFavoriteById(state, filmId));
 
   const handleFavoriteButtonClick = () => {
-    if (isFavorite) {
-      dispatch(removeFilmFromFavorites(filmId));
-    } else {
-      dispatch(addFilmToFavorites(filmId));
-    }
+    const handleFavoriteStatusPromise =
+      isFavorite ?
+        dispatch(removeFilmFromFavorites(filmId)) :
+        dispatch(addFilmToFavorites(filmId));
+
+    handleFavoriteStatusPromise
+      .unwrap()
+      .catch(() => {
+        browserHistory.push(AppRoute.LOGIN);
+      });
   };
 
   const handlePlayButtonClick = () => browserHistory.push(`${AppRoute.PLAYER}/${filmId}`);
@@ -33,18 +36,6 @@ const FilmActionButtons = ({filmId, children}) => {
       <svg viewBox="0 0 18 14" width="18" height="14"><use xlinkHref="#in-list"></use></svg> :
       <svg viewBox="0 0 19 20" width="19" height="20"><use xlinkHref="#add"></use></svg>;
   };
-
-  const renderMyListButton = () => (
-    <button
-      className="btn btn--list movie-card__button"
-      type="button"
-      onClick={handleFavoriteButtonClick}
-      disabled={isFavorStatusLoading}
-    >
-      {renderFavoriteStatusIcon()}
-      <span>My list</span>
-    </button>
-  );
 
   return (
     <>
@@ -56,7 +47,15 @@ const FilmActionButtons = ({filmId, children}) => {
         <svg viewBox="0 0 19 19" width="19" height="19"><use xlinkHref="#play-s"></use></svg>
         <span>Play</span>
       </button>
-      {authStatus === AuthStatus.AUTH && renderMyListButton()}
+      <button
+        className="btn btn--list movie-card__button"
+        type="button"
+        onClick={handleFavoriteButtonClick}
+        disabled={isFavoriteStatusLoading}
+      >
+        {renderFavoriteStatusIcon()}
+        <span>My list</span>
+      </button>
       {children}
     </>
   );
