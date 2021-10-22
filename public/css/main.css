@@ -1354,14 +1354,6 @@ main {
        font-family: "object-fit:cover";
        object-fit: cover; }
 
-.user-block__links {
-  position: absolute;
-  display: none;
-  padding: 25px 0; }
-
-.user-block:hover .user-block__links {
-  display: block; }
-
 .user-block__link {
   display: inline-block;
   font-size: 20px;
