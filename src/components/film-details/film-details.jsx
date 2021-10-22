@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import PropTypes from 'prop-types';
+import filmProp from '../../prop-types/film.prop';
 import Overview from '../overview/overview';
 import DetailsTabs from '../details-tabs/details-tabs';
 import {FilmDetailsSection} from '../../constants';
@@ -31,7 +31,7 @@ const FilmDetails = ({film}) => {
 };
 
 FilmDetails.propTypes = {
-  film: PropTypes.object.isRequired
+  film: filmProp.isRequired
 };
 
 export default FilmDetails;

@@ -1,9 +1,10 @@
 import React from 'react';
-import reviewProp from '../../prop-types/review.prop';
+import PropTypes from 'prop-types';
+import {toLocalDateString} from '../../util/util';
 
 const Review = ({review}) => {
   const {user, rating, comment, date} = review;
-  const localDateString = new Date(date).toLocaleDateString();
+  const localDateString = toLocalDateString(date);
   return (
     <div className="review">
       <blockquote className="review__quote">
@@ -19,7 +20,16 @@ const Review = ({review}) => {
 };
 
 Review.propTypes = {
-  review: reviewProp
+  review: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    user: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+    }),
+    rating: PropTypes.number.isRequired,
+    comment: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired
+  }).isRequired
 };
 
 export default Review;

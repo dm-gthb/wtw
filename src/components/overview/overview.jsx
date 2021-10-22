@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import filmProp from '../../prop-types/film.prop';
 import Rating from '../rating/rating';
 
 const Overview = ({film}) => {
@@ -17,7 +17,7 @@ const Overview = ({film}) => {
 };
 
 Overview.propTypes = {
-  film: PropTypes.object.isRequired
+  film: filmProp.isRequired
 };
 
 export default Overview;

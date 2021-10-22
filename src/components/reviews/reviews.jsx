@@ -18,28 +18,34 @@ const Reviews = ({filmId}) => {
   if (!isDataLoaded) {
     return (
       <div className="movie-card__reviews movie-card__row">
-        <div className="movie-card__reviews-col">
-          {onLoadingComponent}
-        </div>
+        {onLoadingComponent}
       </div>
     );
   }
 
-  const renderContent = () => {
-    if (!isDataLoaded) {
-      return {onLoadingComponent};
-    }
+  if (!reviews.length) {
+    return (
+      <div className="movie-card__reviews movie-card__row">
+        <p>No reviews yet</p>
+      </div>
+    );
+  }
 
-    return reviews.length ?
-      reviews.map((review) => <Review key={review.id} review={review} />) :
-      `no reviews yet`;
-  };
+  const midReviewIndex = Math.ceil(reviews.length / 2);
+  const firstColData = reviews.slice(0, midReviewIndex);
+  const secondColData = reviews.slice(midReviewIndex + 1);
 
   return (
     <div className="movie-card__reviews movie-card__row">
       <div className="movie-card__reviews-col">
-        {renderContent()}
+        {firstColData.map((review) => <Review key={review.id} review={review} />)}
       </div>
+      {
+        secondColData.length > 0 &&
+        <div className="movie-card__reviews-col">
+          {secondColData.map((review) => <Review key={review.id} review={review} />)}
+        </div>
+      }
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import filmProp from '../../prop-types/film.prop';
 import FilmActionButtons from '../film-action-buttons/film-action-buttons';
 
 const FilmHeadInfo = ({film, children}) => {
@@ -21,7 +22,7 @@ const FilmHeadInfo = ({film, children}) => {
 };
 
 FilmHeadInfo.propTypes = {
-  film: PropTypes.object.isRequired,
+  film: filmProp.isRequired,
   children: PropTypes.node,
 };
 

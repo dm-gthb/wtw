@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import filmProp from '../../prop-types/film.prop';
 import PageHeader from '../page-header/page-header';
 import FilmHeadInfo from '../film-head-info/film-head-info';
 import Poster from '../poster/poster';
@@ -13,6 +13,7 @@ const FilmFullInfo = ({film}) => {
   const {name, posterImage, backgroundImage, backgroundColor} = film;
   const authStatus = useSelector(selectAuthStatus);
   const routeMatch = useRouteMatch();
+  const backgroundStyle = {backgroundColor};
 
   const renderReviewButton = () => (
     <Link
@@ -24,7 +25,7 @@ const FilmFullInfo = ({film}) => {
   );
 
   return (
-    <section className="movie-card movie-card--full" style={{backgroundColor}}>
+    <section className="movie-card movie-card--full" style={backgroundStyle}>
       <div className="movie-card__hero">
         <div className="movie-card__bg">
           <img src={backgroundImage} alt={name} />
@@ -52,7 +53,7 @@ const FilmFullInfo = ({film}) => {
 };
 
 FilmFullInfo.propTypes = {
-  film: PropTypes.object.isRequired
+  film: filmProp.isRequired
 };
 
 export default FilmFullInfo;

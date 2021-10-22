@@ -66,3 +66,5 @@ export const getRatingName = (rating) => {
 
   return ``;
 };
+
+export const toLocalDateString = (date) => new Date(date).toLocaleDateString();

@@ -88,7 +88,7 @@ const FullScreenVideoPlayer = ({film}) => {
 };
 
 FullScreenVideoPlayer.propTypes = {
-  film: filmProp
+  film: filmProp.isRequired
 };
 
 export default FullScreenVideoPlayer;
