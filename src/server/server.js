@@ -7,8 +7,12 @@ import {
   Serializer
 } from 'miragejs';
 import {APIRoute, HttpCode} from '../constants';
-import {getRandomNum} from '../util/util';
-import {films} from './mock';
+import {
+  admin as mockAdmin,
+  user as mockUser,
+  generateComment,
+  films,
+} from '../mocks/mocks';
 
 export function makeServer() {
   return createServer({
@@ -32,34 +36,14 @@ export function makeServer() {
       }),
     },
     seeds(server) {
-      server.create(`admin`, {
-        name: `Admin Name`,
-        email: `test@test.com`,
-        [`avatar_url`]: `/img/avatar.jpg`,
-        isAuth: false
-      });
-
-      const user = server.create(`user`, {
-        name: `Name Surname`,
-        email: `test@test.com`,
-        [`avatar_url`]: `/img/avatar.jpg`,
-      });
-
+      server.create(`admin`, mockAdmin);
+      const user = server.create(`user`, mockUser);
       for (const film of films) {
         const currentFilm = server.create(`film`, film);
         server.create(`comment`, {
+          ...generateComment(),
           user,
           film: currentFilm,
-          rating: getRandomNum(1, 10),
-          comment: `Lorem lorem ipsum.`,
-          date: Date.now(),
-        });
-        server.create(`comment`, {
-          user,
-          film: currentFilm,
-          rating: getRandomNum(1, 10),
-          comment: `Second Comment`,
-          date: Date.now(),
         });
       }
     },
@@ -106,7 +90,7 @@ export function makeServer() {
           return new Response(HttpCode.UNAUTHORIZED);
         }
         const filmId = request.params.filmId;
-        const status = request.params.status;
+        const status = +request.params.status;
         const film = schema.films.find(filmId);
         film.update(`is_favorite`, !!status);
         return film;
