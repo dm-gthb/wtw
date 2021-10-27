@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {useParams} from 'react-router-dom';
 import FilmFullInfo from '../film-full-info/film-full-info';
@@ -16,6 +16,13 @@ const FilmPage = () => {
   const currentFilm = useSelector((state) => selectFilmById(state, +id));
   const [isDataLoaded, onLoadingComponent] = useLoadingStatus(selectFilmsLoadingStatus);
   const allFilms = useSelector(selectAllFilms);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: `smooth`
+    });
+  }, [id]);
 
   if (!isDataLoaded) {
     return <WrapperPage>{onLoadingComponent}</WrapperPage>;
