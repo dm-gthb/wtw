@@ -68,3 +68,5 @@ export const getRatingName = (rating) => {
 };
 
 export const toLocalDateString = (date) => new Date(date).toLocaleDateString();
+
+export const getRandomNum = (min, max) => Math.floor(min + Math.random() * (max - min + 1));

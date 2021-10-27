@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {APIRoute, FavoriteStatus, HttpCode, HttpMethod} from '../constants';
 
-const BACKEND_URL = ``;
+const BACKEND_URL = `/api`;
 const REQUEST_TIMEOUT = 5000;
 
 class API {
@@ -13,6 +13,13 @@ class API {
     });
     this._onUnauthorized = onUnauthorized;
     this._bindResponseInterceptors();
+    this._transformReviewServerData = (review) => ({
+      id: +review.id,
+      user: this._transformUserServerData(review.user),
+      rating: review.rating,
+      comment: review.comment,
+      date: review.date,
+    });
   }
 
   _bindResponseInterceptors() {
@@ -87,7 +94,7 @@ class API {
 
   async getFilmReviews(filmId) {
     const reviews = await this._load(`${APIRoute.REVIEWS}/${filmId}`);
-    return reviews;
+    return reviews.comments.map(this._transformReviewServerData);
   }
 
   async postReview({filmId, formData}) {
@@ -100,7 +107,7 @@ class API {
 
   _transformFilmServerData(film) {
     return {
-      id: film.id,
+      id: +film.id,
       name: film.name,
       previewImage: film.preview_image,
       backgroundImage: film.background_image,
@@ -121,7 +128,7 @@ class API {
 
   _transformUserServerData(user) {
     return {
-      id: user.id,
+      id: +user.id,
       name: user.name,
       email: user.email,
       avatar: user.avatar_url

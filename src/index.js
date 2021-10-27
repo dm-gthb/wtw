@@ -5,6 +5,9 @@ import App from './components/app/app';
 import {fetchFavoriteFilms, fetchAllFilms} from './store/films-data/films-data';
 import store from './store/store';
 import {checkAuth} from './store/user/user';
+import {makeServer} from './server/server';
+
+makeServer();
 
 store.dispatch(checkAuth());
 store.dispatch(fetchAllFilms());
