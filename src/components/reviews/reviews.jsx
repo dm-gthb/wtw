@@ -33,7 +33,7 @@ const Reviews = ({filmId}) => {
 
   const midReviewIndex = Math.ceil(reviews.length / 2);
   const firstColData = reviews.slice(0, midReviewIndex);
-  const secondColData = reviews.slice(midReviewIndex + 1);
+  const secondColData = reviews.slice(midReviewIndex);
 
   return (
     <div className="movie-card__reviews movie-card__row">
