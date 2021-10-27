@@ -57,7 +57,7 @@ export function makeServer() {
         const film = schema.films.first();
         return film.attrs;
       });
-      this.get(APIRoute.FAVOFITE, (schema) => {
+      this.get(APIRoute.FAVORITE, (schema) => {
         const favorites = schema.films.where({[`is_favorite`]: true});
         return favorites.models;
       });
@@ -84,7 +84,7 @@ export function makeServer() {
         admin.update(`isAuth`, true);
         return admin.attrs;
       });
-      this.post(`${APIRoute.FAVOFITE}/:filmId/:status`, (schema, request) => {
+      this.post(`${APIRoute.FAVORITE}/:filmId/:status`, (schema, request) => {
         const isAuth = schema.admins.first().attrs.isAuth;
         if (!isAuth) {
           return new Response(HttpCode.UNAUTHORIZED);

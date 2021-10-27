@@ -53,7 +53,7 @@ export const APIRoute = {
   LOGOUT: `/logout`,
   REVIEWS: `/comments`,
   PROMO: `/promo`,
-  FAVOFITE: `/favorite`,
+  FAVORITE: `/favorite`,
 };
 
 export const FavoriteStatus = {

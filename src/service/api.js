@@ -56,19 +56,19 @@ class API {
   }
 
   async getFavoritesFilms() {
-    const rawFilmsData = await this._load(APIRoute.FAVOFITE);
+    const rawFilmsData = await this._load(APIRoute.FAVORITE);
     return rawFilmsData.map(this._transformFilmServerData);
   }
 
   async addFilmToFavorites(filmId) {
-    const rawFilmData = await this._load(`${APIRoute.FAVOFITE}/${filmId}/${FavoriteStatus.ADDING}`, {
+    const rawFilmData = await this._load(`${APIRoute.FAVORITE}/${filmId}/${FavoriteStatus.ADDING}`, {
       method: HttpMethod.POST,
     });
     return this._transformFilmServerData(rawFilmData);
   }
 
   async removeFilmFromFavorites(filmId) {
-    const rawFilmData = await this._load(`${APIRoute.FAVOFITE}/${filmId}/${FavoriteStatus.REMOVING}`, {
+    const rawFilmData = await this._load(`${APIRoute.FAVORITE}/${filmId}/${FavoriteStatus.REMOVING}`, {
       method: HttpMethod.POST,
     });
     return this._transformFilmServerData(rawFilmData);
