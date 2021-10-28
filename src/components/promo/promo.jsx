@@ -17,35 +17,39 @@ const Promo = () => {
     }
   }, [isDataLoaded, dispatch]);
 
-  if (!isDataLoaded) {
-    return (
-      <section className="movie-card">
-        <div className="movie-card__bg" />
-        <h1 className="visually-hidden">WTW</h1>
-        <PageHeader className="movie-card__head" />
-        {onLoadingComponent}
-      </section>
-    );
-  }
+  const renderBackground = () => {
+    if (isDataLoaded && film) {
+      const {name, backgroundImage} = film;
+      return <div className="movie-card__bg">
+        <img src={backgroundImage} alt={name} />
+      </div>;
+    }
 
-  const {
-    backgroundImage,
-    name,
-    posterImage,
-  } = film;
+    return <div className="movie-card__bg" />;
+  };
+
+  const renderFilmData = () => {
+    if (isDataLoaded && film) {
+      const {name, posterImage} = film;
+      return <div className="movie-card__info">
+        <Poster title={name} image={posterImage} />
+        <FilmHeadInfo film={film} />
+      </div>;
+    }
+
+    return <div className="movie-card__info">
+      <div className="movie-card__poster"></div>
+      {onLoadingComponent}
+    </div>;
+  };
 
   return (
     <section className="movie-card">
-      <div className="movie-card__bg">
-        <img src={backgroundImage} alt={name} />
-      </div>
+      {renderBackground()}
       <h1 className="visually-hidden">WTW</h1>
       <PageHeader className="movie-card__head" />
       <div className="movie-card__wrap">
-        <div className="movie-card__info">
-          <Poster title={name} image={posterImage} />
-          <FilmHeadInfo film={film} />
-        </div>
+        {renderFilmData()}
       </div>
     </section>
   );

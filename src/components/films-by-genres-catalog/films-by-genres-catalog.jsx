@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useSelector} from 'react-redux';
-import {selectGenres, selectPromoFilmLoadingStatus} from '../../store/films-data/films-data';
+import {selectGenres, selectFilmsLoadingStatus} from '../../store/films-data/films-data';
 import FilmsCatalog from '../films-catalog/films-catalog';
 import GenresTabs from '../genres-tabs/genres-tabs';
 import {useFilmsGenre} from '../../hooks/useFilmsGenre';
@@ -13,7 +13,7 @@ import {
 
 const FilmsByGenresCatalog = () => {
   const dispatch = useDispatch();
-  const [isDataLoaded, onLoadingComponent] = useLoadingStatus(selectPromoFilmLoadingStatus);
+  const [isDataLoaded, onLoadingComponent] = useLoadingStatus(selectFilmsLoadingStatus);
   const genres = useSelector(selectGenres);
   const genre = useSelector(selectGenreFilter);
   const [filteredFilms, handleGenreChange, resetGenre] = useFilmsGenre();
