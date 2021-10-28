@@ -14,6 +14,8 @@ import {
   films,
 } from '../mocks/mocks';
 
+const RESPONSE_TIMEOUT = 0;
+
 export function makeServer() {
   return createServer({
     models: {
@@ -50,6 +52,7 @@ export function makeServer() {
 
     routes() {
       this.namespace = `api`;
+      this.timing = RESPONSE_TIMEOUT;
       this.get(APIRoute.FILMS, (schema) => {
         return schema.films.all().models;
       });
