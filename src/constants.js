@@ -80,7 +80,7 @@ export const RatingRangeName = {
 
 export const MAX_RATING = 10;
 export const MAX_FILMS_CARDS_TO_RENDER_ONCE = 8;
-export const PREVIEW_VIDEO_PLAYING_TIMEOUT = 1500;
+export const PREVIEW_VIDEO_PLAYING_TIMEOUT = 1000;
 export const DEFAULT_GENRE_FILTER = `All genres`;
 export const SIMILAR_GENRE_FILMS_MAX_COUNT = 4;
 export const MAX_GENRES_COUNT = 10;
